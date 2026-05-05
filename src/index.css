@@ -1,0 +1,27 @@
+@import "tailwindcss";
+
+:root {
+  color: #ffffff;
+  background: #0a0a0a;
+  font-family: "PingFang SC", "Microsoft YaHei", "Noto Sans SC", sans-serif;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+  background:
+    radial-gradient(circle at top, rgba(255, 255, 255, 0.08), transparent 24%),
+    linear-gradient(180deg, #111111 0%, #050505 100%);
+}
+
+a {
+  color: inherit;
+}
+
+button {
+  font: inherit;
+}
