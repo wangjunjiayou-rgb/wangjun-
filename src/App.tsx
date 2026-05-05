@@ -38,14 +38,14 @@ const kvWorks: WorkItem[] = makeWorks('KV海报', 'Campaign Visual', 'KV视觉',
 const detailWorks: WorkItem[] = [
   { title: '儿童医学中心项目', slug: 'kv-case-01', tag: 'KV海报', type: 'Trust Visual', desc: '专业背书与科技感视觉项目。', image: 'https://i.111666.best/image/L4eoTnEsOZsrILQJdt6aVW.png', detailImage: 'https://i.111666.best/image/LO8SHeHlXC1QPuYjmLN1Fr.jpg' },
   { title: '营养补剂详情页设计', slug: 'detail-design-01', tag: '详情设计', type: 'Detail Page', desc: '详情页长图展示项目。', image: 'https://i.111666.best/image/wgPhMS1Bx043FCsGmN1CLJ.png', detailImage: 'https://i.111666.best/image/7ocUTgFpixpTZkGrslOzLE.jpeg' },
-  { title: '母婴营养液详情页设计', slug: 'detail-design-02', tag: '详情设计', type: 'Detail Page', desc: '母婴营养品详情页设计。', image: 'https://i.111666.best/image/U3Gi2eAX07ghiJg7eVkrpo.png', detailImage: 'https://i.111666.best/image/PCIxpSHm7vopP8p9tq1Zxu.jpeg' },
+  { title: '母婴营养液详情页设计', slug: 'detail-design-02', tag: '详情设计', type: 'Detail Page', desc: '母婴营养品详情页设计。', image: 'https://cloud.video.taobao.com/vod/Ci7wv6EpVaYddwN7NTuhBGBUp2njvXfqvrIp-c8nN1g.mp4', detailImage: 'https://i.111666.best/image/PCIxpSHm7vopP8p9tq1Zxu.jpeg' },
   { title: '详情页设计 03', slug: 'detail-design-03', tag: '详情设计', type: 'Detail Page', desc: '详情页新增项目。', image: 'https://i.111666.best/image/LdPOuZiSVX7yZZeYbbnRQ4.png', detailImage: 'https://i.111666.best/image/Mh2lqbVDMzLCr7qcfjBuUh.jpeg' },
 ];
 
 const liveWorks = makeWorks('直播&其他', 'Live Visual', '直播视觉', [
   'https://i.111666.best/image/2hUVGRQDPhzHR2vwq0scra.png', 'https://i.111666.best/image/Bv0yoSushodDzNjzFTj40R.png',
   'https://i.111666.best/image/yOzofC2wNTbHn4C76FDVqL.png', 'https://i.111666.best/image/yrCgTimHNH25hwfRaFN5Zh.png',
-  'https://i.111666.best/image/MM9xxIl3HSXYb2njhONizb.jpg', 'https://i.111666.best/image/sg721p5V7E3cxiPYOoROoE.png',
+  'https://cloud.video.taobao.com/vod/LRGL6IWnf5nW39w_Xa9hRIKuznGJCaf__h0MMrfHzPo.mp4', 'https://i.111666.best/image/sg721p5V7E3cxiPYOoROoE.png',
   'https://i.111666.best/image/SiDQUnr4lnDyFSzehziA4t.png', 'https://i.111666.best/image/uf6RKLJ8TGAD6DI4UXCVRw.png',
   'https://i.111666.best/image/E5rP1fgul3zCVngtoa57HE.png', 'https://i.111666.best/image/WgsJ8FodjTXTeLVIf0fmtZ.png',
   'https://i.111666.best/image/YzgJJXYOt1Z7Zn6KadHCOe.png', 'https://i.111666.best/image/tmoUTdGrBLlQWPV51HB0WF.png',
@@ -76,7 +76,7 @@ const mainWorks = makeWorks('主图展示', 'Main Image', '主图展示', [
 const works: WorkItem[] = [
   ...detailWorks,
   ...kvWorks,
-  { title: 'AIGC产品广告概念图', slug: 'aigc-01', tag: '新质生产力', type: 'AI Creative', desc: 'AI创意视觉项目。' },
+  { title: 'AIGC产品广告概念图', slug: 'aigc-01', tag: '新质生产力', type: 'AI Creative', desc: 'AI创意视觉项目。', image: 'https://i.111666.best/image/QjRWxoJgTmvNnFzEV71Ngi.jpg', detailImage: 'https://i.111666.best/image/vvV6Tc36HyGNoBLJDjgM0T.png' },
   { title: 'AI产品场景合成', slug: 'aigc-02', tag: '新质生产力', type: 'Scene Generation', desc: 'AI场景合成视觉项目。' },
   ...liveWorks,
   ...makeWorks('3D渲染', '3D Render', '3D渲染', [
@@ -102,13 +102,14 @@ const works: WorkItem[] = [
 ];
 
 const experiences: Exp[] = [
-  { company: '上海巴九零网络科技有限公司', time: '2025.08 - 2026.06', role: '电商设计师', details: ['负责公司 brand IP 及周边电商产品的视觉系统搭建。', '负责大型营销活动的线上专题页、详情页及直播间视觉氛围设计。'] },
-  { company: '上海哈晟智能科技有限公司', time: '2024.10 - 2025.05', role: '电商设计师', details: ['负责品牌产品站（抖音、京东、私域）相关设计，包含页面设计、产品渲染、抖音直播图等。负责全店新版主图优化', '负责公司各平台的风格统一，把握产品卖点，搭配不同场景风格进行场景渲染，提升产品的视觉表现力', '与运营团队合作，确保设计内容符合市场需求和用户喜好，提升转化率'] },
-  { company: '上海纯米科技股份有限公司', time: '2022.03 - 2023.12', role: '电商设计师', details: ['负责品牌产品站（天猫、京东、官网、有品）相关设计，包含页面设计、产品渲染、产品包装设计等', '负责市场营销活动视觉设计，建立纯米科技品牌规范，根据公司的发展不断完善、优化品牌规范'] },
-  { company: '上海恒辉品牌管理有限公司', time: '2020.06 - 2022.01', role: '电商设计师', details: ['主要负责品牌项目的设计工作，包括主页面视觉设计，二级页面，推广图钻展直通车详情页的设计工作', '协调安排设计成员与助理的工作输出，引导视觉方向，保持项目视觉风格的一致性'] },
+  { company: '上海巴九零网络科技有限公司', time: '2025.08 - 2026.06', role: '电商设计师', details: ['旗舰店品牌感重塑：负责“金斯健贝旗舰店”视觉升级，针对原有视觉逻辑混乱的痛点，通过重新定义视觉风格并建立规范，建立具有高辨识度和信任感的品牌视觉形象。', '深度利用 AI 工具：利用AIGC解决设计问题（例如AI提示词工作台），将AI能力融入工作并建立工作流'] },
+  { company: '上海晗晟智能科技有限公司', time: '2024.06 - 2025.07', role: '电商设计师', details: ['负责品牌产品站相关设计，包含页面设计、产品渲染、抖音直播图等。负责全店新版主图优化', '负责公司各平台的风格统一，把握产品卖点，搭配不同场景风格进行场景渲染，提升产品的视觉表现力', '与运营团队合作，确保设计内容符合市场需求和用户喜好，提升转化率'] },
+  { company: '上海纯米科技股份有限公司', time: '2022.03 - 2024.02', role: '电商设计师', details: ['负责品牌产品站（天猫、京东、官网、有品）相关设计，包含页面设计、产品渲染、产品包装设计等', '负责市场营销活动视觉设计，建立纯米科技品牌规范，根据公司的发展不断完善、优化品牌规范'] },
+  { company: '上海恒辉品牌管理有限公司', time: '2018.06 - 2022.01', role: '电商设计师', details: ['主要负责品牌项目的设计工作，包括主页面视觉设计，二级页面，推广图钻展直通车详情页的设计工作'] },
 ];
 
-const canOpen = (work: WorkItem) => work.tag === '详情设计' || Boolean(work.detailImage);
+const canOpen = (work: WorkItem) => work.tag === '详情设计' || work.slug === 'aigc-02' || Boolean(work.detailImage);
+const isVideo = (url: string) => /\.mp4(?:$|\?)/i.test(url);
 
 function TopNav({ isScrolled, onNavClick }: { isScrolled: boolean; onNavClick: (filter: string) => void }) {
   return (
@@ -158,8 +159,10 @@ export default function EcommerceDesignerPortfolio() {
   const [detailSlug, setDetailSlug] = useState('detail-design-01');
   const [returnToWorks, setReturnToWorks] = useState(false);
   const [aspectMap, setAspectMap] = useState<Record<string, Aspect>>({});
+  const [videoAspectMap, setVideoAspectMap] = useState<Record<string, number>>({});
   const worksRef = useRef<HTMLElement | null>(null);
   const detailProject = works.find((work) => work.slug === detailSlug);
+  const isEditMode = new URLSearchParams(window.location.search).get('edit') === '1';
 
   const filteredWorks = useMemo(() => {
     const getSortAspect = (work: WorkItem) => {
@@ -168,6 +171,7 @@ export default function EcommerceDesignerPortfolio() {
       if (work.tag === '3D渲染') return aspectMap[work.slug] ?? '9:11';
       if (work.tag === '详情设计') return '9:16';
       if (work.tag === 'KV海报') return aspectMap[work.slug] ?? '3:4';
+      if (work.tag === '新质生产力') return '1:1';
       return 'default';
     };
 
@@ -181,7 +185,7 @@ export default function EcommerceDesignerPortfolio() {
       default: 99,
     };
 
-    const list = works.filter((work) => (work.image || work.detailImage) && (activeFilter === '全部' || work.tag === activeFilter));
+    const list = works.filter((work) => (work.image || work.detailImage || work.tag === '新质生产力') && (activeFilter === '全部' || work.tag === activeFilter));
 
     return list.map((work, index) => ({ work, index })).sort((a, b) => {
       const openDelta = Number(canOpen(b.work)) - Number(canOpen(a.work));
@@ -242,6 +246,7 @@ export default function EcommerceDesignerPortfolio() {
       if (aspectMap[work.slug] === '9:16') return 'aspect-[9/16]';
       return 'aspect-[3/4]';
     }
+    if (work.tag === '新质生产力') return 'aspect-square';
     if (work.tag === '3D渲染') {
       if (aspectMap[work.slug] === '9:4.8') return 'aspect-[9/4.8]';
       if (aspectMap[work.slug] === '3:4') return 'aspect-[3/4]';
@@ -252,6 +257,15 @@ export default function EcommerceDesignerPortfolio() {
   const workImage = (work: WorkItem) => {
     const fallback = <div className="absolute inset-0 bg-[linear-gradient(135deg,#1f1f1f,rgba(255,70,70,0.35),#0a0a0a)]" />;
     if (!work.image) return fallback;
+    if (isVideo(work.image)) {
+      return <>{fallback}<video src={work.image} className="absolute inset-0 h-full w-full object-contain object-top opacity-0 transition-opacity duration-500" autoPlay muted loop playsInline preload="metadata" onLoadedMetadata={(e) => {
+        const video = e.currentTarget;
+        if (video.videoWidth && video.videoHeight) {
+          const ratio = video.videoWidth / video.videoHeight;
+          setVideoAspectMap((prev) => prev[work.slug] === ratio ? prev : { ...prev, [work.slug]: ratio });
+        }
+      }} onLoadedData={(e) => { e.currentTarget.style.opacity = '1'; }} /></>;
+    }
     return <>{fallback}<img src={work.image} alt={work.title} className="absolute left-0 top-1/2 h-auto w-full -translate-y-1/2 object-contain opacity-0 transition-opacity duration-500" onLoad={(e) => {
       const img = e.currentTarget; img.style.opacity = '1';
       if (work.tag === '主图展示' || work.tag === '直播&其他' || work.tag === '3D渲染' || work.tag === 'KV海报') {
@@ -274,6 +288,7 @@ export default function EcommerceDesignerPortfolio() {
     if (work.tag === '直播&其他') return `直播&其他-${aspectMap[work.slug] ?? '9:16'}`;
     if (work.tag === '3D渲染') return `3D渲染-${aspectMap[work.slug] ?? '9:11'}`;
     if (work.tag === '详情设计') return '通用-9:16';
+    if (work.tag === '新质生产力') return '新质生产力-1:1';
     if (work.tag === 'KV海报') {
       const kvAspect = aspectMap[work.slug] ?? '3:4';
       return kvAspect === '9:16' ? '通用-9:16' : `KV海报-${kvAspect}`;
@@ -297,6 +312,7 @@ export default function EcommerceDesignerPortfolio() {
     if (key === '直播&其他-7:3.5') return 'md:grid-cols-1 xl:grid-cols-2';
     return 'md:grid-cols-2 xl:grid-cols-3';
   };
+  const mediaAspectStyle = (work: WorkItem) => videoAspectMap[work.slug] ? { aspectRatio: videoAspectMap[work.slug] } : undefined;
 
   if (view === 'detail') return <DetailPage detailProject={detailProject} onBack={() => { setReturnToWorks(true); setView('home'); }} />;
 
@@ -321,7 +337,7 @@ export default function EcommerceDesignerPortfolio() {
             <div className="rounded-[30px] border border-white/10 bg-white/[0.03] p-6"><p className="text-base font-semibold">个人优势</p><p className="mt-4 text-[15px] leading-8 text-white/72">喜欢尝试前沿科技，始终认为 AIGC 是新质生产力，持续将 AI 能力融入设计流程，提升效率与商业转化表现。</p></div>
             <div className="rounded-[28px] border border-white/10 bg-white/[0.03] p-5"><p className="mb-4 text-base font-semibold">擅长工具</p><div className="flex flex-wrap gap-3">{['ChatGPT', 'Gemini', 'Photoshop', 'Cinema 4D', 'Octane'].map((tool) => <span key={tool} className="rounded-full border border-white/12 bg-white/[0.04] px-4 py-2 text-sm text-white/82">{tool}</span>)}</div></div>
           </aside>
-          <section><h3 className="mb-8 text-[58px] font-semibold leading-none md:text-[64px]">Experience</h3>{experiences.map((item) => <div key={item.company} className="border-b border-white/10 py-8 first:pt-0"><div className="flex flex-col gap-4 md:flex-row md:justify-between"><div><h4 className="text-[28px] font-semibold md:text-[30px]">{item.company}</h4><p className="mt-2 text-base text-white/42">{item.role}</p></div><div className="text-[18px] text-white/48">{item.time}</div></div><div className="mt-6 space-y-1 text-[15px] leading-8 text-white/72 md:text-[16px]">{item.details.map((detail) => <p key={detail}>· {detail}</p>)}</div></div>)}</section>
+          <section><h3 className="mb-8 text-[58px] font-semibold leading-none md:text-[64px]">Experience</h3>{experiences.map((item) => <div key={item.company} className="border-b border-white/10 py-8 first:pt-0"><div className="flex flex-col gap-4 md:flex-row md:justify-between"><div><h4 className="text-[28px] font-semibold md:text-[30px]">{item.company}</h4><p className="mt-2 text-base text-white/42">{item.role}</p></div><div className="text-[18px] text-white/48">{item.time}</div></div><div className="mt-6 space-y-1 text-[15px] leading-8 text-white/72 md:text-[16px]">{item.details.map((detail) => <p key={detail} className="grid grid-cols-[12px_minmax(0,1fr)] gap-2"><span>·</span><span>{detail}</span></p>)}</div></div>)}</section>
         </section>
 
         <section ref={worksRef} className="mx-auto max-w-7xl px-6 py-14 md:px-10">
@@ -332,7 +348,7 @@ export default function EcommerceDesignerPortfolio() {
                 {group.items.map((work, groupIndex) => {
                   const index = group.startIndex + groupIndex;
                   const openable = canOpen(work);
-                  return <div key={work.slug} role={openable ? 'button' : undefined} tabIndex={openable ? 0 : -1} onClick={() => { if (openable) { setDetailSlug(work.slug); setView('detail'); } }} onKeyDown={(e) => { if (openable && (e.key === 'Enter' || e.key === ' ')) { e.preventDefault(); setDetailSlug(work.slug); setView('detail'); } }} className={`group h-fit overflow-hidden rounded-[15px] border bg-white/[0.025] transition hover:-translate-y-1 ${openable ? 'cursor-pointer border-white/24' : 'border-white/10'}`}><div className={`relative ${aspectClass(work)} overflow-hidden`}>{workImage(work)}<div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" /><div className="absolute left-5 top-5 rounded-full border border-white/15 bg-black/30 px-3 py-1 text-xs text-white/80 backdrop-blur-md">{work.tag}</div>{openable && (
+                  return <div key={work.slug} data-display-number={String(index + 1).padStart(2, '0')} data-work-slug={work.slug} data-media-src={work.image ?? work.detailImage ?? ''} role={openable ? 'button' : undefined} tabIndex={openable ? 0 : -1} onClick={() => { if (openable) { setDetailSlug(work.slug); setView('detail'); } }} onKeyDown={(e) => { if (openable && (e.key === 'Enter' || e.key === ' ')) { e.preventDefault(); setDetailSlug(work.slug); setView('detail'); } }} className={`group h-fit overflow-hidden rounded-[15px] border bg-white/[0.025] transition hover:-translate-y-1 ${openable ? 'cursor-pointer border-white/24' : 'border-white/10'}`}><div className={`relative ${aspectClass(work)} overflow-hidden`} style={mediaAspectStyle(work)}>{workImage(work)}<div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" /><div className="absolute left-5 top-5 rounded-full border border-white/15 bg-black/30 px-3 py-1 text-xs text-white/80 backdrop-blur-md">{work.tag}</div>{isEditMode && <div className="pointer-events-none absolute left-5 top-[58px] z-30 rounded-md border border-lime-300/50 bg-black/72 px-3 py-1.5 text-[12px] font-semibold text-lime-200 shadow-xl backdrop-blur-md">编号 {String(index + 1).padStart(2, '0')} / {work.slug}</div>}{openable && (
                     <>
                       <div className="pointer-events-none absolute right-5 top-5 z-20 flex items-center gap-2 rounded-full border border-white/18 bg-black/38 px-3.5 py-2 text-xs font-medium text-white/90 shadow-[0_12px_32px_rgba(0,0,0,0.32)] backdrop-blur-xl transition-all duration-300 group-hover:border-white/30 group-hover:bg-white/14 group-hover:text-white">
                         <span className="relative flex h-2 w-2">
