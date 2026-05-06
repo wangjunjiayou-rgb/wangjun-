@@ -8,10 +8,20 @@ type Exp = { company: string; time: string; role: string; details: string[] };
 
 const filters = ['全部', '新质生产力', 'KV海报', '详情设计', '直播&其他', '主图展示', '3D渲染'];
 const categoryOrder: Record<string, number> = { 新质生产力: 0, KV海报: 1, 详情设计: 2, '直播&其他': 3, 主图展示: 4, '3D渲染': 5 };
-const featuredMain: Record<string, number> = { 'main-image-17': 0, 'main-image-06': 1, 'main-image-12': 2 };
+const featuredMain: Record<string, number> = {
+  'main-image-17': 0,
+  'main-image-05': 1,
+  'main-image-09': 2,
+  'main-image-extra-01': 3,
+  'main-image-extra-02': 4,
+  'main-image-extra-03': 5,
+  'main-image-06': 6,
+  'main-image-12': 7,
+};
 const featuredRender: Record<string, number> = {};
 const renderBottomOrder: Record<string, number> = { 'render-04': 0, 'render-05': 1, 'render-06': 2 };
-const heroSlides = ['https://i.111666.best/image/xJrWOU5rinHu3ceSCN1BHM.jpeg'];
+const hiddenWorks = new Set(['live-14', 'live-19', 'live-20', 'live-27', 'main-image-11', 'main-image-18', 'main-image-19']);
+const heroSlides = ['https://img.alicdn.com/imgextra/i4/1879869629/O1CN01YENLYA2L08r8UppLF_!!1879869629.jpg'];
 
 const makeWorks = (tag: string, type: string, prefix: string, links: string[]): WorkItem[] => links.map((image, i) => ({
   title: `${prefix} ${String(i + 1).padStart(2, '0')}`,
@@ -23,81 +33,99 @@ const makeWorks = (tag: string, type: string, prefix: string, links: string[]): 
 }));
 
 const kvWorks: WorkItem[] = makeWorks('KV海报', 'Campaign Visual', 'KV视觉', [
-  'https://i.111666.best/image/dr2qkkZqtJZAPE4ktuqY1D.png',
-  'https://i.111666.best/image/bcqAI23QfonGuZ9YkZX5zN.png',
-  'https://i.111666.best/image/xivf2RCtv8jWANLcA5b6ET.png',
-  'https://i.111666.best/image/vcpIFSz5B4KCFRKZ9MPaLk.jpg',
-  'https://i.111666.best/image/uAFLwNmeSdim0K2ob1UjoF.jpg',
-  'https://i.111666.best/image/F5fbiUw66xLxSTK10Wxbu7.gif',
-  'https://i.111666.best/image/ZwRpG9DeMuNP5PxgO8jo61.png',
-  'https://i.111666.best/image/o0BahaV9wKSJITBTMWGZjj.png',
-  'https://i.111666.best/image/LTkiLhuU0N56NPIT2P0POm.png',
-  'https://i.111666.best/image/And9vlOUucYRFw0CCDUeO6.jpg',
+  'https://img.alicdn.com/imgextra/i2/1879869629/O1CN01Izq3dX2L08r89XmK3_!!1879869629.png',
+  'https://img.alicdn.com/imgextra/i4/1879869629/O1CN01JMH7oH2L08r865vMc_!!1879869629.png',
+  'https://img.alicdn.com/imgextra/i4/1879869629/O1CN01fo7eb52L08r8UJwIm_!!1879869629.png',
+  'https://img.alicdn.com/imgextra/i3/1879869629/O1CN01dfn7CH2L08r7qaFRt_!!1879869629.jpg',
+  'https://img.alicdn.com/imgextra/i4/1879869629/O1CN01IKLGCf2L08r8M8N2z_!!1879869629.jpg',
+  'https://img.alicdn.com/imgextra/i2/1879869629/O1CN01gIeLKK2L08r8Dm9WT_!!1879869629.gif',
+  'https://img.alicdn.com/imgextra/i4/1879869629/O1CN01fo7eb52L08r8UJwIm_!!1879869629.png',
+  'https://img.alicdn.com/imgextra/i4/1879869629/O1CN01eRMMIe2L08r8HG9aj_!!1879869629.png',
+  'https://img.alicdn.com/imgextra/i3/1879869629/O1CN01rKpICI2L08r3Ul66M_!!1879869629.png',
+  'https://img.alicdn.com/imgextra/i3/1879869629/O1CN01pNhYJO2L08r8FVz1T_!!1879869629.jpg',
 ]);
 
 const detailWorks: WorkItem[] = [
-  { title: '儿童医学中心项目', slug: 'kv-case-01', tag: 'KV海报', type: 'Trust Visual', desc: '专业背书与科技感视觉项目。', image: 'https://i.111666.best/image/L4eoTnEsOZsrILQJdt6aVW.png', detailImage: 'https://i.111666.best/image/LO8SHeHlXC1QPuYjmLN1Fr.jpg' },
-  { title: '营养补剂详情页设计', slug: 'detail-design-01', tag: '详情设计', type: 'Detail Page', desc: '详情页长图展示项目。', image: 'https://i.111666.best/image/wgPhMS1Bx043FCsGmN1CLJ.png', detailImage: 'https://i.111666.best/image/7ocUTgFpixpTZkGrslOzLE.jpeg' },
+  { title: '儿童医学中心项目', slug: 'kv-case-01', tag: 'KV海报', type: 'Trust Visual', desc: '专业背书与科技感视觉项目。', image: 'https://img.alicdn.com/imgextra/i1/1879869629/O1CN01Uagzuo2L08r7yKYaP_!!1879869629.png', detailImage: 'https://i.111666.best/image/LO8SHeHlXC1QPuYjmLN1Fr.jpg' },
+  { title: '营养补剂详情页设计', slug: 'detail-design-01', tag: '详情设计', type: 'Detail Page', desc: '详情页长图展示项目。', image: 'https://img.alicdn.com/imgextra/i3/1879869629/O1CN01JoUfJx2L08r8V6oNS_!!1879869629.png', detailImage: 'https://i.111666.best/image/7ocUTgFpixpTZkGrslOzLE.jpeg' },
   { title: '母婴营养液详情页设计', slug: 'detail-design-02', tag: '详情设计', type: 'Detail Page', desc: '母婴营养品详情页设计。', image: 'https://cloud.video.taobao.com/vod/Ci7wv6EpVaYddwN7NTuhBGBUp2njvXfqvrIp-c8nN1g.mp4', detailImage: 'https://i.111666.best/image/PCIxpSHm7vopP8p9tq1Zxu.jpeg' },
-  { title: '详情页设计 03', slug: 'detail-design-03', tag: '详情设计', type: 'Detail Page', desc: '详情页新增项目。', image: 'https://i.111666.best/image/LdPOuZiSVX7yZZeYbbnRQ4.png', detailImage: 'https://i.111666.best/image/Mh2lqbVDMzLCr7qcfjBuUh.jpeg' },
+  { title: '详情页设计 03', slug: 'detail-design-03', tag: '详情设计', type: 'Detail Page', desc: '详情页新增项目。', image: 'https://img.alicdn.com/imgextra/i3/1879869629/O1CN01QEWeQx2L08r8ZcoHS_!!1879869629.png', detailImage: 'https://i.111666.best/image/Mh2lqbVDMzLCr7qcfjBuUh.jpeg' },
 ];
 
 const liveWorks = makeWorks('直播&其他', 'Live Visual', '直播视觉', [
-  'https://i.111666.best/image/2hUVGRQDPhzHR2vwq0scra.png', 'https://i.111666.best/image/Bv0yoSushodDzNjzFTj40R.png',
-  'https://i.111666.best/image/yOzofC2wNTbHn4C76FDVqL.png', 'https://i.111666.best/image/yrCgTimHNH25hwfRaFN5Zh.png',
-  'https://cloud.video.taobao.com/vod/LRGL6IWnf5nW39w_Xa9hRIKuznGJCaf__h0MMrfHzPo.mp4', 'https://i.111666.best/image/sg721p5V7E3cxiPYOoROoE.png',
-  'https://i.111666.best/image/SiDQUnr4lnDyFSzehziA4t.png', 'https://i.111666.best/image/uf6RKLJ8TGAD6DI4UXCVRw.png',
-  'https://i.111666.best/image/E5rP1fgul3zCVngtoa57HE.png', 'https://i.111666.best/image/WgsJ8FodjTXTeLVIf0fmtZ.png',
-  'https://i.111666.best/image/YzgJJXYOt1Z7Zn6KadHCOe.png', 'https://i.111666.best/image/tmoUTdGrBLlQWPV51HB0WF.png',
-  'https://i.111666.best/image/GoBvcFaC1KVyPKFTibNRSI.png', 'https://i.111666.best/image/6ENnbgj8J3YQfg7LB8waPe.jpg',
-  'https://i.111666.best/image/YOCFcT9Yq8WL6oRdaNr9ud.png', 'https://i.111666.best/image/1sPOLmbsmyi17qvpFlPVBX.png',
-  'https://i.111666.best/image/I8aqCb0887e9elj1nOEonx.png', 'https://i.111666.best/image/TaREmxrQcQEMUQobbVPsPZ.png',
-  'https://i.111666.best/image/xZW18k8UF0wFf7LUPhG6uQ.png', 'https://i.111666.best/image/2kX8MtVJmLKxurmEV1dM11.png',
-  'https://i.111666.best/image/whI52ho6bLWPM0Gcgcn7u5.jpg', 'https://i.111666.best/image/IsR76OG1eSXSgglGmaRFtO.png',
+  'https://img.alicdn.com/imgextra/i2/1879869629/O1CN01tsOAKO2L08r8E8yl3_!!1879869629.png', 'https://img.alicdn.com/imgextra/i3/1879869629/O1CN01bVp3ar2L08r86RLCB_!!1879869629.png',
+  'https://cloud.video.taobao.com/vod/uOVrHjIaR9mB3nV5_5_J9dYbded2vW7_yiPV19qGOo4.mp4', 'https://img.alicdn.com/imgextra/i2/1879869629/O1CN01yTGHMO2L08r8FqjIN_!!1879869629.png',
+  'https://img.alicdn.com/imgextra/i2/1879869629/O1CN01NpYJxK2L08r8RgOT4_!!1879869629.png', 'https://img.alicdn.com/imgextra/i3/1879869629/O1CN01b9xMD42L08r8Hbhjc_!!1879869629.png',
+  'https://img.alicdn.com/imgextra/i3/1879869629/O1CN01Xo4sEe2L08r7qvbCJ_!!1879869629.png', 'https://img.alicdn.com/imgextra/i2/1879869629/O1CN018Q5qeh2L08r8Z3toO_!!1879869629.png',
+  'https://img.alicdn.com/imgextra/i2/1879869629/O1CN01SH0l9p2L08r8UgQhH_!!1879869629.png', 'https://img.alicdn.com/imgextra/i3/1879869629/O1CN01liMIUV2L08r3V8atk_!!1879869629.png',
+  'https://img.alicdn.com/imgextra/i4/1879869629/O1CN019nv71V2L08r8ItnBI_!!1879869629.png', 'https://img.alicdn.com/imgextra/i2/1879869629/O1CN01whrPhm2L08r8Italk_!!1879869629.png',
+  'https://img.alicdn.com/imgextra/i2/1879869629/O1CN01cy8HfA2L08r7qwfjE_!!1879869629.png', 'https://i.111666.best/image/6ENnbgj8J3YQfg7LB8waPe.jpg',
+  'https://img.alicdn.com/imgextra/i2/1879869629/O1CN01NxZxDG2L08r8MZUR8_!!1879869629.png', 'https://img.alicdn.com/imgextra/i4/1879869629/O1CN017musHt2L08r7qxPUG_!!1879869629.png',
+  'https://img.alicdn.com/imgextra/i3/1879869629/O1CN01tz9pfj2L08r8HcRYV_!!1879869629.png', 'https://img.alicdn.com/imgextra/i4/1879869629/O1CN01mee7bi2L08r8RgGEb_!!1879869629.png',
+  'https://img.alicdn.com/imgextra/i4/1879869629/O1CN01CNzsS82L08r8FrKmF_!!1879869629.jpg', 'https://i.111666.best/image/2kX8MtVJmLKxurmEV1dM11.png',
+  'https://img.alicdn.com/imgextra/i4/1879869629/O1CN01CNzsS82L08r8FrKmF_!!1879869629.jpg', 'https://img.alicdn.com/imgextra/i1/1879869629/O1CN01slUWiA2L08r8MZDnK_!!1879869629.png',
   'https://i.111666.best/image/uYD0BQEq0tnK2tej1X8vfU.jpg',
-  'https://i.111666.best/image/mC2wRHngp3S0gk1Wl85m8p.jpg',
-  'https://i.111666.best/image/gtezIpDX7AaAoxfY1fZyPh.jpg',
-  'https://i.111666.best/image/q1ayr630yHoO7q3MXx2yrb.jpg',
+  'https://img.alicdn.com/imgextra/i1/1879869629/O1CN016PcRrw2L08r8Ivs9D_!!1879869629.png',
+  'https://img.alicdn.com/imgextra/i2/1879869629/O1CN01fR4FLe2L08r8ItnFb_!!1879869629.png',
+  'https://img.alicdn.com/imgextra/i3/1879869629/O1CN01OdJkfH2L08r8i8w3f_!!1879869629.jpg',
+  'https://img.alicdn.com/imgextra/i4/1879869629/O1CN019nv71V2L08r8ItnBI_!!1879869629.png',
 ]).map((w, i) => ({ ...w, type: i >= 7 && i <= 10 ? 'Live Cover' : 'Live Visual' }));
 
 const mainWorks = makeWorks('主图展示', 'Main Image', '主图展示', [
-  'https://i.111666.best/image/Lo70P8qGMn4ZewQ2VQoevO.png', 'https://i.111666.best/image/EwvkbGSk1E44dWAtd5c6lV.png',
-  'https://i.111666.best/image/VqhJSlUN75HQknf4nA1u7r.png', 'https://i.111666.best/image/uaEBVtPfSkHUJhiF0uEmk9.jpg',
-  'https://i.111666.best/image/4wWa7krkYttYozeouZR2e6.jpg', 'https://i.111666.best/image/qOzTnVzpFhFkD8v5jl52Pw.jpg',
-  'https://i.111666.best/image/WAJHHLoS4HCpEKswCVBscw.jpg', 'https://i.111666.best/image/WjjfYgE9Mv2LGJtY6Bv0v5.png',
-  'https://i.111666.best/image/LUifZAhLUinKP4g1qWQ0hv.png', 'https://i.111666.best/image/SUOAFNoMctA5Ry1Ybecy1m.png',
-  'https://i.111666.best/image/5Av81yx00UuMwOXp3D37ZJ.png', 'https://i.111666.best/image/EvgB7DN0bEVpbcuRhMmYld.png',
-  'https://i.111666.best/image/yRCYd0dHLOXV6x1wD9g9nx.jpg', 'https://i.111666.best/image/QxOPj1Vz3MxZEf905osYgz.png',
-  'https://i.111666.best/image/Im1a8a1Yqa2WOUoCXoS0pC.png', 'https://i.111666.best/image/GeEJRk5XCP4PfmxEtBo0oq.png',
-  'https://i.111666.best/image/fQXMUjoO4BteqCTXtvERl0.png', 'https://i.111666.best/image/iDYKtiALx5oPeLqWsfFlhu.jpg',
+  'https://img.alicdn.com/imgextra/i4/1879869629/O1CN01w92mjp2L08r7wpQCq_!!1879869629.jpg', 'https://img.alicdn.com/imgextra/i1/1879869629/O1CN01MHhZdJ2L08r7woU0o_!!1879869629.png',
+  'https://img.alicdn.com/imgextra/i2/1879869629/O1CN01yIsJ582L08r89XqOG_!!1879869629.png', 'https://img.alicdn.com/imgextra/i2/1879869629/O1CN01iaIzgn2L08r8kknET_!!1879869629.png',
+  'https://img.alicdn.com/imgextra/i2/1879869629/O1CN01CeSe3b2L08r8YgGjV_!!1879869629.jpg', 'https://img.alicdn.com/imgextra/i4/1879869629/O1CN01HVxNmA2L08r863i7H_!!1879869629.png',
+  'https://img.alicdn.com/imgextra/i2/1879869629/O1CN01jaP32B2L08r7zeqUN_!!1879869629.jpg', 'https://img.alicdn.com/imgextra/i1/1879869629/O1CN01gjdUGX2L08r3Ui0mS_!!1879869629.png',
+  'https://img.alicdn.com/imgextra/i4/1879869629/O1CN01GF4Y5w2L08r7yJolU_!!1879869629.png', 'https://img.alicdn.com/imgextra/i4/1879869629/O1CN01a3KYHu2L08r8Yix4E_!!1879869629.png',
+  'https://i.111666.best/image/5Av81yx00UuMwOXp3D37ZJ.png', 'https://img.alicdn.com/imgextra/i2/1879869629/O1CN01l3C82W2L08r8FUuQ7_!!1879869629.jpg',
+  'https://img.alicdn.com/imgextra/i2/1879869629/O1CN01GG0Fjt2L08r8YjUJF_!!1879869629.jpg', 'https://img.alicdn.com/imgextra/i2/1879869629/O1CN01eqmQLd2L08r8hhwoT_!!1879869629.png',
+  'https://img.alicdn.com/imgextra/i3/1879869629/O1CN01k9jSoE2L08r7qWtXF_!!1879869629.png', 'https://img.alicdn.com/imgextra/i1/1879869629/O1CN01GF5yCf2L08r89WZOh_!!1879869629.png',
+  'https://img.alicdn.com/imgextra/i1/1879869629/O1CN01TibSfs2L08r8adNPy_!!1879869629.png', 'https://i.111666.best/image/iDYKtiALx5oPeLqWsfFlhu.jpg',
   'https://i.111666.best/image/izjEJCjTOuqNACG4AGwwoy.png',
 ]);
+
+const mainExtraImages = [
+  'https://img.alicdn.com/imgextra/i4/1879869629/O1CN01oyMlcd2L08r8hixEP_!!1879869629.png',
+  'https://img.alicdn.com/imgextra/i1/1879869629/O1CN01FxGfe32L08r8YgKsV_!!1879869629.jpg',
+  'https://img.alicdn.com/imgextra/i4/1879869629/O1CN01WINO5s2L08r8M8Eeo_!!1879869629.png',
+];
+
+const mainExtraWorks: WorkItem[] = mainExtraImages.map((image, i) => ({
+  title: `Main Image Extra ${String(i + 1).padStart(2, '0')}`,
+  slug: `main-image-extra-${String(i + 1).padStart(2, '0')}`,
+  tag: mainWorks[0].tag,
+  type: 'Main Image',
+  desc: 'Main image placeholder.',
+  image,
+}));
 
 const works: WorkItem[] = [
   ...detailWorks,
   ...kvWorks,
-  { title: 'AIGC产品广告概念图', slug: 'aigc-01', tag: '新质生产力', type: 'AI Creative', desc: 'AI创意视觉项目。', image: 'https://i.111666.best/image/QjRWxoJgTmvNnFzEV71Ngi.jpg', detailImage: 'https://i.111666.best/image/vvV6Tc36HyGNoBLJDjgM0T.png' },
+  { title: 'AIGC产品广告概念图', slug: 'aigc-01', tag: '新质生产力', type: 'AI Creative', desc: 'AI创意视觉项目。', image: 'https://img.alicdn.com/imgextra/i2/1879869629/O1CN01am20I32L08r8iQO4W_!!1879869629.jpg', detailImage: 'https://i.111666.best/image/vvV6Tc36HyGNoBLJDjgM0T.png' },
   { title: 'AI产品场景合成', slug: 'aigc-02', tag: '新质生产力', type: 'Scene Generation', desc: 'AI场景合成视觉项目。' },
   ...liveWorks,
   ...makeWorks('3D渲染', '3D Render', '3D渲染', [
-    'https://i.111666.best/image/gq2zS7THXnjifnW8H9ohga.jpeg',
-    'https://i.111666.best/image/cAXrwJ5C5fR4jqTcKOReH9.jpeg',
-    'https://i.111666.best/image/XR3sT81Mt7AVXFsB4svjap.jpeg',
-    'https://i.111666.best/image/PDGsyymrqwc2Ca7sBkk90v.jpeg',
-    'https://i.111666.best/image/S9ml6g3HdkArxpNGGDYtoq.jpeg',
-    'https://i.111666.best/image/aHG2wtoiFpBp7kPtA260Mu.jpeg',    'https://i.111666.best/image/sOpeNNKWpWqhz9KnGIQ5SD.png',
-    'https://i.111666.best/image/MnoH7RO5knEvM1IIlQHl3Y.png',
-    'https://i.111666.best/image/9LAwbpmA1pRi5W77fBXSoA.png',
-    'https://i.111666.best/image/Oe1voqOwQf95dfsu3M2BbA.png',
-    'https://i.111666.best/image/Z2WGLqxCcroAy5rx738Hib.png',
-    'https://i.111666.best/image/GaCUUMve5STeCtERtdurhs.png',
-    'https://i.111666.best/image/fOBbXYjTdyRZ1f0hBC6FhX.png',
-    'https://i.111666.best/image/06xm4FuQvA6tM7DsIXFw6u.png',
-    'https://i.111666.best/image/gdaQygMrtaN8TARPAMuge2.jpg',
-    'https://i.111666.best/image/haAsAqc1beleIY55HHsH2s.jpg',
-    'https://i.111666.best/image/1kYM24aWap2juLngii93CO.jpg',
-    'https://i.111666.best/image/Q68SblEYAqTbMFHh05WnCs.jpg',
+    'https://img.alicdn.com/imgextra/i3/1879869629/O1CN01BiGcWW2L08r8GwSFY_!!1879869629.jpg',
+    'https://img.alicdn.com/imgextra/i3/1879869629/O1CN01U3rMGb2L08r9jzuUn_!!1879869629.jpg',
+    'https://img.alicdn.com/imgextra/i4/1879869629/O1CN01DlA8I32L08r8PHWvy_!!1879869629.jpg',
+    'https://img.alicdn.com/imgextra/i1/1879869629/O1CN015ld1An2L08r8XLFEd_!!1879869629.jpg',
+    'https://img.alicdn.com/imgextra/i4/1879869629/O1CN01YtTLo32L08r9k06yV_!!1879869629.jpg',
+    'https://img.alicdn.com/imgextra/i2/1879869629/O1CN01z5vFM42L08r8Gvqnp_!!1879869629.jpg',
+    'https://img.alicdn.com/imgextra/i1/1879869629/O1CN0172tRqD2L08r8XPo7G_!!1879869629.png',
+    'https://img.alicdn.com/imgextra/i2/1879869629/O1CN013N1NV42L08r8XNnP2_!!1879869629.png',
+    'https://img.alicdn.com/imgextra/i4/1879869629/O1CN01HiwjPZ2L08r8kxsuH_!!1879869629.png',
+    'https://img.alicdn.com/imgextra/i4/1879869629/O1CN01PDLyHP2L08r8bqAGD_!!1879869629.png',
+    'https://img.alicdn.com/imgextra/i3/1879869629/O1CN01bzJn9u2L08r7tgWWG_!!1879869629.png',
+    'https://img.alicdn.com/imgextra/i4/1879869629/O1CN01fva3VK2L08r8GyP0n_!!1879869629.png',
+    'https://img.alicdn.com/imgextra/i4/1879869629/O1CN01QZ48mn2L08r8LZgIV_!!1879869629.png',
+    'https://img.alicdn.com/imgextra/i2/1879869629/O1CN01a8weI42L08r7znuBe_!!1879869629.png',
+    'https://img.alicdn.com/imgextra/i1/1879869629/O1CN01NNAn4q2L08r7ykGlr_!!1879869629.jpg',
+    'https://img.alicdn.com/imgextra/i2/1879869629/O1CN01BnKi2Q2L08r8IyclK_!!1879869629.jpg',
+    'https://img.alicdn.com/imgextra/i2/1879869629/O1CN01Ff4a5u2L08r8Rj0vR_!!1879869629.jpg',
+    'https://img.alicdn.com/imgextra/i2/1879869629/O1CN01UtxC8e2L08r8Rkl1F_!!1879869629.jpg',
   ]),
+  ...mainExtraWorks,
   ...mainWorks,
 ];
 
@@ -108,8 +136,11 @@ const experiences: Exp[] = [
   { company: '上海恒辉品牌管理有限公司', time: '2018.06 - 2022.01', role: '电商设计师', details: ['主要负责品牌项目的设计工作，包括主页面视觉设计，二级页面，推广图钻展直通车详情页的设计工作'] },
 ];
 
+const isPlaceholderWork = (work: WorkItem) => work.slug.startsWith('main-image-extra-');
 const canOpen = (work: WorkItem) => work.tag === '详情设计' || work.slug === 'aigc-02' || Boolean(work.detailImage);
 const isVideo = (url: string) => /\.mp4(?:$|\?)/i.test(url);
+const isImageHost = (url?: string) => Boolean(url && /(i\.111666\.best|duk\.tw)/i.test(url));
+const isEditModeEnabled = () => new URLSearchParams(window.location.search).get('edit') === '1';
 
 function TopNav({ isScrolled, onNavClick }: { isScrolled: boolean; onNavClick: (filter: string) => void }) {
   return (
@@ -131,13 +162,14 @@ function TopNav({ isScrolled, onNavClick }: { isScrolled: boolean; onNavClick: (
 function DetailPage({ detailProject, onBack }: { detailProject?: WorkItem; onBack: () => void }) {
   const [width, setWidth] = useState<number | null>(null);
   useEffect(() => setWidth(null), [detailProject?.detailImage]);
+  const showHostLabel = isEditModeEnabled() && isImageHost(detailProject?.detailImage);
   return (
     <div className="min-h-screen bg-neutral-950 text-white">
       <TopNav isScrolled={true} onNavClick={() => {}} />
       <main className="pt-20">
         <section className="px-6 py-10 md:px-10">
           <div className="mx-auto mb-8 flex max-w-[1200px] items-start justify-between gap-4 border-b border-white/10 pb-5">
-            <div><p className="text-sm uppercase tracking-[0.28em] text-white/35">Detail Project</p><h2 className="mt-3 text-3xl font-semibold md:text-5xl">{detailProject?.title ?? '详情设计项目'}</h2></div>
+            <div><p className="text-sm uppercase tracking-[0.28em] text-white/35">Detail Project</p><h2 className="mt-3 text-3xl font-semibold md:text-5xl">{detailProject?.title ?? '详情设计项目'}</h2>{showHostLabel && <div className="mt-4 inline-flex rounded-md border border-amber-300/70 bg-amber-950/80 px-3 py-1.5 text-[12px] font-semibold text-amber-100 shadow-xl backdrop-blur-md">二级页图床链接 / {detailProject?.slug}</div>}</div>
             <button type="button" onClick={onBack} className="rounded-full border border-white/10 bg-white/[0.04] px-5 py-2.5 text-sm text-white">返回作品集</button>
           </div>
           <p className="mx-auto mb-8 max-w-[1200px] text-sm leading-7 text-white/60">这里是详情设计二级页展示区域，仅保留一张长图用于完整展示详情页设计稿。</p>
@@ -162,7 +194,7 @@ export default function EcommerceDesignerPortfolio() {
   const [videoAspectMap, setVideoAspectMap] = useState<Record<string, number>>({});
   const worksRef = useRef<HTMLElement | null>(null);
   const detailProject = works.find((work) => work.slug === detailSlug);
-  const isEditMode = new URLSearchParams(window.location.search).get('edit') === '1';
+  const isEditMode = isEditModeEnabled();
 
   const filteredWorks = useMemo(() => {
     const getSortAspect = (work: WorkItem) => {
@@ -185,7 +217,7 @@ export default function EcommerceDesignerPortfolio() {
       default: 99,
     };
 
-    const list = works.filter((work) => (work.image || work.detailImage || work.tag === '新质生产力') && (activeFilter === '全部' || work.tag === activeFilter));
+    const list = works.filter((work) => !hiddenWorks.has(work.slug) && (work.image || work.detailImage || work.tag === '新质生产力' || isPlaceholderWork(work)) && (activeFilter === '全部' || work.tag === activeFilter));
 
     return list.map((work, index) => ({ work, index })).sort((a, b) => {
       const openDelta = Number(canOpen(b.work)) - Number(canOpen(a.work));
@@ -333,7 +365,7 @@ export default function EcommerceDesignerPortfolio() {
 
         <section className="mx-auto grid max-w-7xl gap-12 px-6 py-24 md:px-10 xl:grid-cols-[360px_minmax(0,1fr)]">
           <aside className="space-y-6 xl:sticky xl:top-28 xl:self-start">
-            <div className="overflow-hidden rounded-[34px] border border-white/10 bg-white/[0.03] p-6 shadow-2xl"><div className="aspect-[4/5] overflow-hidden rounded-[26px]"><img src="https://duk.tw/vNC4qH.png" alt="portrait" className="h-full w-full object-cover" /></div><h4 className="mt-6 text-[42px] font-semibold">汪军</h4><div className="mt-5 flex flex-wrap gap-2 text-sm text-white/72"><span className="rounded-full border border-white/10 px-3 py-1">30岁</span><span className="rounded-full border border-white/10 px-3 py-1">江西</span><span className="rounded-full border border-white/10 px-3 py-1">6年设计经验</span></div><div className="mt-4 space-y-1.5 border-t border-white/10 pt-3 text-sm text-white/62"><p>电话：18607967343（微信同号）</p><p>邮箱：1623571697@qq.com</p></div></div>
+            <div className="overflow-hidden rounded-[34px] border border-white/10 bg-white/[0.03] p-6 shadow-2xl"><div className="aspect-[4/5] overflow-hidden rounded-[26px]"><img src="https://img.alicdn.com/imgextra/i1/1879869629/O1CN01Sy9MW92L08r8EKara_!!1879869629.png" alt="portrait" className="h-full w-full object-cover" /></div><h4 className="mt-6 text-[42px] font-semibold">汪军</h4><div className="mt-5 flex flex-wrap gap-2 text-sm text-white/72"><span className="rounded-full border border-white/10 px-3 py-1">30岁</span><span className="rounded-full border border-white/10 px-3 py-1">江西</span><span className="rounded-full border border-white/10 px-3 py-1">6年设计经验</span></div><div className="mt-4 space-y-1.5 border-t border-white/10 pt-3 text-sm text-white/62"><p>电话：18607967343（微信同号）</p><p>邮箱：1623571697@qq.com</p></div></div>
             <div className="rounded-[30px] border border-white/10 bg-white/[0.03] p-6"><p className="text-base font-semibold">个人优势</p><p className="mt-4 text-[15px] leading-8 text-white/72">喜欢尝试前沿科技，始终认为 AIGC 是新质生产力，持续将 AI 能力融入设计流程，提升效率与商业转化表现。</p></div>
             <div className="rounded-[28px] border border-white/10 bg-white/[0.03] p-5"><p className="mb-4 text-base font-semibold">擅长工具</p><div className="flex flex-wrap gap-3">{['ChatGPT', 'Gemini', 'Photoshop', 'Cinema 4D', 'Octane'].map((tool) => <span key={tool} className="rounded-full border border-white/12 bg-white/[0.04] px-4 py-2 text-sm text-white/82">{tool}</span>)}</div></div>
           </aside>
@@ -348,7 +380,9 @@ export default function EcommerceDesignerPortfolio() {
                 {group.items.map((work, groupIndex) => {
                   const index = group.startIndex + groupIndex;
                   const openable = canOpen(work);
-                  return <div key={work.slug} data-display-number={String(index + 1).padStart(2, '0')} data-work-slug={work.slug} data-media-src={work.image ?? work.detailImage ?? ''} role={openable ? 'button' : undefined} tabIndex={openable ? 0 : -1} onClick={() => { if (openable) { setDetailSlug(work.slug); setView('detail'); } }} onKeyDown={(e) => { if (openable && (e.key === 'Enter' || e.key === ' ')) { e.preventDefault(); setDetailSlug(work.slug); setView('detail'); } }} className={`group h-fit overflow-hidden rounded-[15px] border bg-white/[0.025] transition hover:-translate-y-1 ${openable ? 'cursor-pointer border-white/24' : 'border-white/10'}`}><div className={`relative ${aspectClass(work)} overflow-hidden`} style={mediaAspectStyle(work)}>{workImage(work)}<div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" /><div className="absolute left-5 top-5 rounded-full border border-white/15 bg-black/30 px-3 py-1 text-xs text-white/80 backdrop-blur-md">{work.tag}</div>{isEditMode && <div className="pointer-events-none absolute left-5 top-[58px] z-30 rounded-md border border-lime-300/50 bg-black/72 px-3 py-1.5 text-[12px] font-semibold text-lime-200 shadow-xl backdrop-blur-md">编号 {String(index + 1).padStart(2, '0')} / {work.slug}</div>}{openable && (
+                  const mediaSrc = work.image ?? work.detailImage ?? '';
+                  const hostLabel = isImageHost(work.image);
+                  return <div key={work.slug} data-display-number={String(index + 1).padStart(2, '0')} data-work-slug={work.slug} data-media-src={mediaSrc} data-image-host={hostLabel ? 'true' : undefined} role={openable ? 'button' : undefined} tabIndex={openable ? 0 : -1} onClick={() => { if (openable) { setDetailSlug(work.slug); setView('detail'); } }} onKeyDown={(e) => { if (openable && (e.key === 'Enter' || e.key === ' ')) { e.preventDefault(); setDetailSlug(work.slug); setView('detail'); } }} className={`group h-fit overflow-hidden rounded-[15px] border bg-white/[0.025] transition hover:-translate-y-1 ${openable ? 'cursor-pointer border-white/24' : 'border-white/10'}`}><div className={`relative ${aspectClass(work)} overflow-hidden`} style={mediaAspectStyle(work)}>{workImage(work)}<div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" /><div className="absolute left-5 top-5 rounded-full border border-white/15 bg-black/30 px-3 py-1 text-xs text-white/80 backdrop-blur-md">{work.tag}</div>{isEditMode && <div className={`pointer-events-none absolute left-5 top-[58px] z-30 rounded-md border px-3 py-1.5 text-[12px] font-semibold shadow-xl backdrop-blur-md ${hostLabel ? 'border-amber-300/70 bg-amber-950/80 text-amber-100' : 'border-lime-300/50 bg-black/72 text-lime-200'}`}><div>编号 {String(index + 1).padStart(2, '0')} / {work.slug}</div>{hostLabel && <div className="mt-0.5 text-[11px]">图床链接</div>}</div>}{openable && (
                     <>
                       <div className="pointer-events-none absolute right-5 top-5 z-20 flex items-center gap-2 rounded-full border border-white/18 bg-black/38 px-3.5 py-2 text-xs font-medium text-white/90 shadow-[0_12px_32px_rgba(0,0,0,0.32)] backdrop-blur-xl transition-all duration-300 group-hover:border-white/30 group-hover:bg-white/14 group-hover:text-white">
                         <span className="relative flex h-2 w-2">
