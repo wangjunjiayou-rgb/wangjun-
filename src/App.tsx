@@ -8,21 +8,43 @@ type ImageHostAuditItem = { label: string; field: string; url: string; slug?: st
 type Exp = { company: string; time: string; role: string; details: string[] };
 
 const filters = ['全部', '新质生产力', 'KV海报', '详情设计', '直播&其他', '主图展示', '3D渲染'];
-const categoryOrder: Record<string, number> = { 新质生产力: 0, KV海报: 1, 详情设计: 2, '直播&其他': 3, 主图展示: 4, '3D渲染': 5 };
+const categoryOrder: Record<string, number> = { 新质生产力: 0, 详情设计: 1, KV海报: 2, '直播&其他': 3, 主图展示: 4, '3D渲染': 5 };
 const featuredMain: Record<string, number> = {
-  'main-image-17': 0,
-  'main-image-05': 1,
-  'main-image-09': 2,
-  'main-image-extra-01': 3,
-  'main-image-extra-02': 4,
-  'main-image-extra-03': 5,
-  'main-image-06': 6,
-  'main-image-12': 7,
+  'main-image-blank-01': 0,
+  'main-image-blank-02': 1,
+  'main-image-blank-03': 2,
+  'main-image-blank-04': 3,
+  'main-image-blank-05': 4,
+  'main-image-blank-06': 5,
+  'main-image-square-01': 6,
+  'main-image-square-02': 7,
+  'main-image-square-03': 8,
+  'main-image-square-04': 9,
+  'main-image-square-05': 10,
+  'main-image-square-06': 11,
+  'main-image-17': 12,
+  'main-image-05': 13,
+  'main-image-09': 14,
+  'main-image-extra-01': 15,
+  'main-image-extra-02': 16,
+  'main-image-extra-03': 17,
+  'main-image-06': 18,
+  'main-image-12': 19,
+  'main-image-01': 20,
+  'main-image-02': 21,
+  'main-image-03': 22,
+  'main-image-10': 23,
+  'main-image-07': 24,
+  'main-image-08': 25,
+  'main-image-04': 26,
 };
 const featuredRender: Record<string, number> = {};
 const renderBottomOrder: Record<string, number> = { 'render-04': 0, 'render-05': 1, 'render-06': 2 };
-const hiddenWorks = new Set(['live-14', 'live-19', 'live-20', 'live-27', 'main-image-11', 'main-image-18', 'main-image-19']);
-const heroSlides = ['https://img.alicdn.com/imgextra/i4/1879869629/O1CN01YENLYA2L08r8UppLF_!!1879869629.jpg'];
+const hiddenWorks = new Set(['live-14', 'live-19', 'live-20', 'live-27', 'main-image-11', 'main-image-18', 'main-image-19', 'main-image-extra-01']);
+const clearedMainImageSlugs = new Set([
+  'main-image-extra-01',
+]);
+const heroSlides = ['https://img.alicdn.com/imgextra/i3/1879869629/O1CN01cXnTs52L08r9NBtzu_!!1879869629.png'];
 const contactQrImage = 'https://i.111666.best/image/mCX5aD5cQIWsbADdyQFDwK.jpg';
 
 const makeWorks = (tag: string, type: string, prefix: string, links: string[]): WorkItem[] => links.map((cover, i) => ({
@@ -37,7 +59,7 @@ const makeWorks = (tag: string, type: string, prefix: string, links: string[]): 
 const kvWorks: WorkItem[] = makeWorks('KV海报', 'Campaign Visual', 'KV视觉', [
   'https://img.alicdn.com/imgextra/i2/1879869629/O1CN01Izq3dX2L08r89XmK3_!!1879869629.png',
   'https://img.alicdn.com/imgextra/i4/1879869629/O1CN01JMH7oH2L08r865vMc_!!1879869629.png',
-  'https://img.alicdn.com/imgextra/i4/1879869629/O1CN01fo7eb52L08r8UJwIm_!!1879869629.png',
+  'https://img.alicdn.com/imgextra/i2/1879869629/O1CN01Z1WBnd2L08r9gtR6T_!!1879869629.png',
   'https://img.alicdn.com/imgextra/i3/1879869629/O1CN01dfn7CH2L08r7qaFRt_!!1879869629.jpg',
   'https://img.alicdn.com/imgextra/i4/1879869629/O1CN01IKLGCf2L08r8M8N2z_!!1879869629.jpg',
   'https://img.alicdn.com/imgextra/i2/1879869629/O1CN01gIeLKK2L08r8Dm9WT_!!1879869629.gif',
@@ -48,10 +70,10 @@ const kvWorks: WorkItem[] = makeWorks('KV海报', 'Campaign Visual', 'KV视觉',
 ]);
 
 const detailWorks: WorkItem[] = [
-  { title: '儿童医学中心项目', slug: 'kv-case-01', tag: 'KV海报', type: 'Trust Visual', desc: '专业背书与科技感视觉项目。', cover: 'https://img.alicdn.com/imgextra/i1/1879869629/O1CN01Uagzuo2L08r7yKYaP_!!1879869629.png', detailMedia: ['https://img.alicdn.com/imgextra/i3/1879869629/O1CN01BeqBUG2L08r817sP4_!!1879869629.jpg'] },
-  { title: '营养补剂详情页设计', slug: 'detail-design-01', tag: '详情设计', type: 'Detail Page', desc: '详情页长图展示项目。', cover: 'https://img.alicdn.com/imgextra/i3/1879869629/O1CN01JoUfJx2L08r8V6oNS_!!1879869629.png', detailMedia: ['https://img.alicdn.com/imgextra/i3/1879869629/O1CN01djOqkN2L08r818kd7_!!1879869629.jpg', 'https://img.alicdn.com/imgextra/i1/1879869629/O1CN01GjlyD72L08r8Yf0wt_!!1879869629.jpg'] },
-  { title: '母婴营养液详情页设计', slug: 'detail-design-02', tag: '详情设计', type: 'Detail Page', desc: '母婴营养品详情页设计。', cover: 'https://cloud.video.taobao.com/vod/Ci7wv6EpVaYddwN7NTuhBGBUp2njvXfqvrIp-c8nN1g.mp4', detailMedia: ['https://cloud.video.taobao.com/vod/yCY7UUA2241Evh5M5hN4cUQvfnTC1QOtRoSrZ2HreOc.mp4', 'https://img.alicdn.com/imgextra/i4/1879869629/O1CN01aqsrtE2L08r8RCKn5_!!1879869629.png', 'https://cloud.video.taobao.com/vod/2szG_tkyL4LKTP1CSfiJmUMICu4E5cLtTJfLuylEiPo.mp4', 'https://img.alicdn.com/imgextra/i3/1879869629/O1CN012rE0Aa2L08r8Lj13t_!!1879869629.png', 'https://img.alicdn.com/imgextra/i3/1879869629/O1CN01nFcg3e2L08r3ZHipI_!!1879869629.jpg'] },
   { title: '详情页设计 03', slug: 'detail-design-03', tag: '详情设计', type: 'Detail Page', desc: '详情页新增项目。', cover: 'https://img.alicdn.com/imgextra/i3/1879869629/O1CN01QEWeQx2L08r8ZcoHS_!!1879869629.png', detailMedia: ['https://img.alicdn.com/imgextra/i2/1879869629/O1CN01Swp9Ee2L08r8mAW21_!!1879869629.png', 'https://img.alicdn.com/imgextra/i1/1879869629/O1CN018CnkV32L08r8jCYqw_!!1879869629.png'] },
+  { title: '营养补剂详情页设计', slug: 'detail-design-01', tag: '详情设计', type: 'Detail Page', desc: '详情页长图展示项目。', cover: 'https://img.alicdn.com/imgextra/i1/1879869629/O1CN01bEqyNW2L08r9ROACe_!!1879869629.jpg', detailMedia: ['https://img.alicdn.com/imgextra/i3/1879869629/O1CN01djOqkN2L08r818kd7_!!1879869629.jpg', 'https://img.alicdn.com/imgextra/i1/1879869629/O1CN01GjlyD72L08r8Yf0wt_!!1879869629.jpg'] },
+  { title: '母婴营养液详情页设计', slug: 'detail-design-02', tag: '详情设计', type: 'Detail Page', desc: '母婴营养品详情页设计。', cover: 'https://cloud.video.taobao.com/vod/Ci7wv6EpVaYddwN7NTuhBGBUp2njvXfqvrIp-c8nN1g.mp4', detailMedia: ['https://cloud.video.taobao.com/vod/yCY7UUA2241Evh5M5hN4cUQvfnTC1QOtRoSrZ2HreOc.mp4', 'https://img.alicdn.com/imgextra/i4/1879869629/O1CN01aqsrtE2L08r8RCKn5_!!1879869629.png', 'https://cloud.video.taobao.com/vod/2szG_tkyL4LKTP1CSfiJmUMICu4E5cLtTJfLuylEiPo.mp4', 'https://img.alicdn.com/imgextra/i3/1879869629/O1CN012rE0Aa2L08r8Lj13t_!!1879869629.png', 'https://img.alicdn.com/imgextra/i3/1879869629/O1CN01nFcg3e2L08r3ZHipI_!!1879869629.jpg'] },
+  { title: '儿童医学中心项目', slug: 'kv-case-01', tag: 'KV海报', type: 'Trust Visual', desc: '专业背书与科技感视觉项目。', cover: 'https://img.alicdn.com/imgextra/i1/1879869629/O1CN01Uagzuo2L08r7yKYaP_!!1879869629.png', detailMedia: ['https://img.alicdn.com/imgextra/i3/1879869629/O1CN01BeqBUG2L08r817sP4_!!1879869629.jpg'] },
 ];
 
 const liveWorks = makeWorks('直播&其他', 'Live Visual', '直播视觉', [
@@ -74,16 +96,28 @@ const liveWorks = makeWorks('直播&其他', 'Live Visual', '直播视觉', [
   'https://img.alicdn.com/imgextra/i3/1879869629/O1CN01J6ChHU2L08r8mb21J_!!1879869629.jpg',
 ]).map((w, i) => ({ ...w, type: i >= 7 && i <= 10 ? 'Live Cover' : 'Live Visual', aspect: ['live-07', 'live-23', 'live-28'].includes(w.slug) ? '9:19' as Aspect : undefined }));
 
+const liveExtraWorks: WorkItem[] = [
+  {
+    title: '直播视觉新增 01',
+    slug: 'live-extra-01',
+    tag: '直播&其他',
+    type: 'Live Visual',
+    desc: '直播&其他新增视频项目。',
+    cover: 'https://cloud.video.taobao.com/vod/7_AeOsMyFPLHT5ic8KiPHkKmf3baXaE5qe99SU_tGy8.mp4',
+    aspect: '1:1',
+  },
+];
+
 const mainWorks = makeWorks('主图展示', 'Main Image', '主图展示', [
-  'https://img.alicdn.com/imgextra/i4/1879869629/O1CN01w92mjp2L08r7wpQCq_!!1879869629.jpg', 'https://img.alicdn.com/imgextra/i1/1879869629/O1CN01MHhZdJ2L08r7woU0o_!!1879869629.png',
-  'https://img.alicdn.com/imgextra/i2/1879869629/O1CN01yIsJ582L08r89XqOG_!!1879869629.png', 'https://img.alicdn.com/imgextra/i2/1879869629/O1CN01iaIzgn2L08r8kknET_!!1879869629.png',
-  'https://img.alicdn.com/imgextra/i2/1879869629/O1CN01CeSe3b2L08r8YgGjV_!!1879869629.jpg', 'https://img.alicdn.com/imgextra/i4/1879869629/O1CN01HVxNmA2L08r863i7H_!!1879869629.png',
-  'https://img.alicdn.com/imgextra/i2/1879869629/O1CN01jaP32B2L08r7zeqUN_!!1879869629.jpg', 'https://img.alicdn.com/imgextra/i1/1879869629/O1CN01gjdUGX2L08r3Ui0mS_!!1879869629.png',
-  'https://img.alicdn.com/imgextra/i4/1879869629/O1CN01GF4Y5w2L08r7yJolU_!!1879869629.png', 'https://img.alicdn.com/imgextra/i4/1879869629/O1CN01a3KYHu2L08r8Yix4E_!!1879869629.png',
+  'https://img.alicdn.com/imgextra/i2/1879869629/O1CN0145jNP62L08r9LWus4_!!1879869629.png', 'https://img.alicdn.com/imgextra/i1/1879869629/O1CN01MHhZdJ2L08r7woU0o_!!1879869629.png',
+  'https://img.alicdn.com/imgextra/i2/1879869629/O1CN01yIsJ582L08r89XqOG_!!1879869629.png', 'https://img.alicdn.com/imgextra/i2/1879869629/O1CN017asOES2L08r9cC8tu_!!1879869629.png',
+  'https://img.alicdn.com/imgextra/i2/1879869629/O1CN01uGQTom2L08r8riSdC_!!1879869629.jpg', 'https://img.alicdn.com/imgextra/i4/1879869629/O1CN01HVxNmA2L08r863i7H_!!1879869629.png',
+  'https://img.alicdn.com/imgextra/i2/1879869629/O1CN01jaP32B2L08r7zeqUN_!!1879869629.jpg', 'https://img.alicdn.com/imgextra/i4/1879869629/O1CN01iku4Zo2L08r9H1TQ4_!!1879869629.png',
+  'https://img.alicdn.com/imgextra/i4/1879869629/O1CN0186ntSQ2L08r94UucF_!!1879869629.gif', 'https://img.alicdn.com/imgextra/i2/1879869629/O1CN01oIKdCe2L08r4PgHhe_!!1879869629.png',
   'https://i.111666.best/image/5Av81yx00UuMwOXp3D37ZJ.png', 'https://img.alicdn.com/imgextra/i2/1879869629/O1CN01l3C82W2L08r8FUuQ7_!!1879869629.jpg',
   'https://img.alicdn.com/imgextra/i2/1879869629/O1CN01GG0Fjt2L08r8YjUJF_!!1879869629.jpg', 'https://img.alicdn.com/imgextra/i2/1879869629/O1CN01eqmQLd2L08r8hhwoT_!!1879869629.png',
-  'https://img.alicdn.com/imgextra/i3/1879869629/O1CN01k9jSoE2L08r7qWtXF_!!1879869629.png', 'https://img.alicdn.com/imgextra/i1/1879869629/O1CN01GF5yCf2L08r89WZOh_!!1879869629.png',
-  'https://img.alicdn.com/imgextra/i1/1879869629/O1CN01TibSfs2L08r8adNPy_!!1879869629.png', 'https://i.111666.best/image/iDYKtiALx5oPeLqWsfFlhu.jpg',
+  'https://img.alicdn.com/imgextra/i1/1879869629/O1CN01bFx90Z2L08r8t2vKw_!!1879869629.png', 'https://img.alicdn.com/imgextra/i1/1879869629/O1CN01GF5yCf2L08r89WZOh_!!1879869629.png',
+  'https://img.alicdn.com/imgextra/i4/1879869629/O1CN01nYsiwb2L08r8lNB2q_!!1879869629.png', 'https://i.111666.best/image/iDYKtiALx5oPeLqWsfFlhu.jpg',
   'https://i.111666.best/image/izjEJCjTOuqNACG4AGwwoy.png',
 ]);
 
@@ -100,7 +134,45 @@ const mainExtraWorks: WorkItem[] = mainExtraImages.map((cover, i) => ({
   type: 'Main Image',
   desc: 'Main image placeholder.',
   cover,
-}));
+})).map((work) => (clearedMainImageSlugs.has(work.slug) ? { ...work, cover: undefined } : work));
+
+const mainBlankWorks: WorkItem[] = Array.from({ length: 6 }, (_, i): WorkItem => ({
+  title: `Main Image Blank ${String(i + 1).padStart(2, '0')}`,
+  slug: `main-image-blank-${String(i + 1).padStart(2, '0')}`,
+  tag: mainWorks[0].tag,
+  type: 'Main Image',
+  desc: 'Main image placeholder.',
+  aspect: '3:4',
+})).map((work, i) => {
+  const coverMap = [
+    'https://img.alicdn.com/imgextra/i4/1879869629/O1CN01ywYacR2L08rAaRQms_!!1879869629.png',
+    'https://img.alicdn.com/imgextra/i2/1879869629/O1CN01EloUEd2L08r938itC_!!1879869629.png',
+    'https://img.alicdn.com/imgextra/i3/1879869629/O1CN01fi98352L08r9Kb36E_!!1879869629.png',
+    'https://img.alicdn.com/imgextra/i3/1879869629/O1CN01qK5xUD2L08r4OjoPD_!!1879869629.png',
+    'https://img.alicdn.com/imgextra/i4/1879869629/O1CN01s0Fg8T2L08r8qPd8O_!!1879869629.png',
+    'https://img.alicdn.com/imgextra/i1/1879869629/O1CN01eFAuBS2L08r9Agtjm_!!1879869629.png',
+  ];
+  return coverMap[i] && !clearedMainImageSlugs.has(work.slug) ? { ...work, cover: coverMap[i] } : work;
+});
+
+const mainSquareBlankWorks: WorkItem[] = Array.from({ length: 6 }, (_, i): WorkItem => ({
+  title: `Main Image Square ${String(i + 1).padStart(2, '0')}`,
+  slug: `main-image-square-${String(i + 1).padStart(2, '0')}`,
+  tag: mainWorks[0].tag,
+  type: 'Main Image',
+  desc: 'Main image placeholder.',
+  aspect: '1:1',
+})).map((work, i) => {
+  const coverMap = [
+    'https://img.alicdn.com/imgextra/i3/1879869629/O1CN01F4BqOE2L08r9SQ8tI_!!1879869629.png',
+    'https://img.alicdn.com/imgextra/i4/1879869629/O1CN01CrFUO92L08r8qOpG2_!!1879869629.png',
+    'https://img.alicdn.com/imgextra/i4/1879869629/O1CN019ol82T2L08r9AiNBf_!!1879869629.png',
+    'https://img.alicdn.com/imgextra/i1/1879869629/O1CN01uFoLWv2L08r998g0o_!!1879869629.png',
+    'https://img.alicdn.com/imgextra/i2/1879869629/O1CN01H9qI7W2L08rAaSIrv_!!1879869629.png',
+    'https://img.alicdn.com/imgextra/i2/1879869629/O1CN01sjHgZs2L08r8zIyGR_!!1879869629.png',
+  ];
+  return coverMap[i] && !clearedMainImageSlugs.has(work.slug) ? { ...work, cover: coverMap[i] } : work;
+});
 
 const works: WorkItem[] = [
   ...detailWorks,
@@ -108,6 +180,7 @@ const works: WorkItem[] = [
   { title: 'AIGC产品广告概念图', slug: 'aigc-01', tag: '新质生产力', type: 'AI Creative', desc: 'AI创意视觉项目。', cover: 'https://img.alicdn.com/imgextra/i2/1879869629/O1CN01am20I32L08r8iQO4W_!!1879869629.jpg', detailMedia: ['https://img.alicdn.com/imgextra/i4/1879869629/O1CN01V4ALXm2L08r86ge37_!!1879869629.png', 'https://cloud.video.taobao.com/vod/CPlfefYnvWMCyl005NQjRAeRZ-sov_MqX0mBschlTJQ.mp4'] },
   { title: 'AI产品场景合成', slug: 'aigc-02', tag: '新质生产力', type: 'Scene Generation', desc: 'AI场景合成视觉项目。' },
   ...liveWorks,
+  ...liveExtraWorks,
   ...makeWorks('3D渲染', '3D Render', '3D渲染', [
     'https://img.alicdn.com/imgextra/i3/1879869629/O1CN01BiGcWW2L08r8GwSFY_!!1879869629.jpg',
     'https://img.alicdn.com/imgextra/i3/1879869629/O1CN01U3rMGb2L08r9jzuUn_!!1879869629.jpg',
@@ -128,18 +201,20 @@ const works: WorkItem[] = [
     'https://img.alicdn.com/imgextra/i2/1879869629/O1CN01Ff4a5u2L08r8Rj0vR_!!1879869629.jpg',
     'https://img.alicdn.com/imgextra/i2/1879869629/O1CN01UtxC8e2L08r8Rkl1F_!!1879869629.jpg',
   ]),
+  ...mainBlankWorks,
+  ...mainSquareBlankWorks,
   ...mainExtraWorks,
-  ...mainWorks,
+  ...mainWorks.map((work) => (clearedMainImageSlugs.has(work.slug) ? { ...work, cover: undefined } : work)),
 ];
 
 const experiences: Exp[] = [
-  { company: '上海巴九零网络科技有限公司', time: '2025.08 - 2026.06', role: '电商设计师', details: ['旗舰店品牌感重塑：负责“金斯健贝旗舰店”视觉升级，针对原有视觉逻辑混乱的痛点，通过重新定义视觉风格并建立规范，建立具有高辨识度和信任感的品牌视觉形象。', '深度利用 AI 工具：利用AIGC解决设计问题（例如AI提示词工作台），将AI能力融入工作并建立工作流'] },
+  { company: '上海巴九零网络科技有限公司', time: '2025.08 - 2026.06', role: '电商设计师', details: ['旗舰店品牌感重塑：负责“金斯健贝旗舰店”视觉升级，针对原有视觉逻辑混乱的痛点，通过重新定义视觉风格并建立规范，建立具有高辨识度和信任感的品牌视觉形象。', '深度利用 AI 工具：利用AIGC解决设计问题（例如AI提示词工作台），将AI能力融入工作并建立工作流', '深入与运营团队沟通交流，确保设计内容符合市场需求和用户喜好，提升转化率'] },
   { company: '上海晗晟智能科技有限公司', time: '2024.06 - 2025.07', role: '电商设计师', details: ['负责品牌产品站相关设计，包含页面设计、产品渲染、抖音直播图等。负责全店新版主图优化', '负责公司各平台的风格统一，把握产品卖点，搭配不同场景风格进行场景渲染，提升产品的视觉表现力', '与运营团队合作，确保设计内容符合市场需求和用户喜好，提升转化率'] },
   { company: '上海纯米科技股份有限公司', time: '2022.03 - 2024.02', role: '电商设计师', details: ['负责品牌产品站（天猫、京东、官网、有品）相关设计，包含页面设计、产品渲染、产品包装设计等', '负责市场营销活动视觉设计，建立纯米科技品牌规范，根据公司的发展不断完善、优化品牌规范'] },
   { company: '上海恒辉品牌管理有限公司', time: '2018.06 - 2022.01', role: '电商设计师', details: ['主要负责品牌项目的设计工作，包括主页面视觉设计，二级页面，推广图钻展直通车详情页的设计工作'] },
 ];
 
-const isPlaceholderWork = (work: WorkItem) => work.slug.startsWith('main-image-extra-');
+const isPlaceholderWork = (work: WorkItem) => work.slug.startsWith('main-image-extra-') || work.slug.startsWith('main-image-blank-') || work.slug.startsWith('main-image-square-') || clearedMainImageSlugs.has(work.slug);
 const canOpen = (work: WorkItem) => work.tag === '详情设计' || work.slug === 'aigc-02' || Boolean(work.detailMedia?.length);
 const isVideo = (url: string) => /\.mp4(?:$|\?)/i.test(url);
 const isImageHost = (url?: string) => Boolean(url && /(i\.111666\.best|duk\.tw)/i.test(url));
@@ -284,6 +359,21 @@ function DetailPage({ detailProject, onBack, onNavClick, onAuditItemSelect }: { 
   );
 }
 
+function EditModeGuide() {
+  return (
+    <aside className="fixed bottom-6 right-6 z-[95] hidden w-[320px] max-w-[calc(100vw-48px)] overflow-hidden rounded-[18px] border border-sky-300/30 bg-slate-950/88 text-white shadow-[0_22px_70px_rgba(0,0,0,0.55)] backdrop-blur-2xl lg:block">
+      <div className="border-b border-white/10 px-4 py-3">
+        <p className="text-sm font-semibold text-sky-100">定位模式</p>
+        <p className="mt-1 text-[12px] leading-5 text-white/55">每张卡片都会显示当前编号和稳定 slug。后面你直接发“编号”或“slug”给我就行。</p>
+      </div>
+      <div className="space-y-2 px-4 py-3 text-[12px] leading-5 text-white/72">
+        <p>示例：清空 `25`</p>
+        <p>示例：替换 `main-image-square-03`</p>
+      </div>
+    </aside>
+  );
+}
+
 export default function EcommerceDesignerPortfolio() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [currentSlide, setCurrentSlide] = useState(0);
@@ -312,6 +402,13 @@ export default function EcommerceDesignerPortfolio() {
       '9:4.8': 6,
       default: 99,
     };
+    const liveAspectOrder: Record<string, number> = {
+      '9:16': 0,
+      '1:1': 1,
+      '9:19': 2,
+      '7:3.5': 3,
+      default: 99,
+    };
 
     const list = works.filter((work) => !hiddenWorks.has(work.slug) && (work.cover || work.detailMedia?.length || work.tag === '新质生产力' || isPlaceholderWork(work)) && (activeFilter === '全部' || work.tag === activeFilter));
 
@@ -324,11 +421,16 @@ export default function EcommerceDesignerPortfolio() {
       const openDelta = Number(canOpen(b.work)) - Number(canOpen(a.work));
       if (openDelta) return openDelta;
 
-
       const aAspect = getSortAspect(a.work);
       const bAspect = getSortAspect(b.work);
-      const aspectDelta = (aspectOrder[aAspect] ?? 99) - (aspectOrder[bAspect] ?? 99);
+      const currentAspectOrder = a.work.tag === '直播&其他' && b.work.tag === '直播&其他' ? liveAspectOrder : aspectOrder;
+      const aspectDelta = (currentAspectOrder[aAspect] ?? 99) - (currentAspectOrder[bAspect] ?? 99);
       if (aspectDelta) return aspectDelta;
+
+      if (a.work.tag === '主图展示' && b.work.tag === '主图展示') {
+        const coverDelta = Number(Boolean(b.work.cover)) - Number(Boolean(a.work.cover));
+        if (coverDelta) return coverDelta;
+      }
 
       if (a.work.tag === '3D渲染' && b.work.tag === '3D渲染') {
         const aBottom = renderBottomOrder[a.work.slug] ?? -1;
@@ -459,6 +561,7 @@ export default function EcommerceDesignerPortfolio() {
     <div className="min-h-screen bg-neutral-950 text-white">
       <TopNav isScrolled={isScrolled} onNavClick={handleFilter} />
       {isEditMode && <ImageHostAuditPanel onItemSelect={handleAuditItemSelect} />}
+      {isEditMode && <EditModeGuide />}
       <main>
         <section className="relative aspect-video min-h-[720px] overflow-hidden border-b border-white/10 bg-neutral-950">
           <img src={heroSlides[currentSlide]} alt="首屏海报" className="absolute inset-0 h-full w-full object-cover" />
@@ -487,10 +590,11 @@ export default function EcommerceDesignerPortfolio() {
               <div key={`${group.key}-${group.startIndex}`} className={`grid items-start gap-5 ${groupGridClass(group.key)}`}>
                 {group.items.map((work, groupIndex) => {
                   const index = group.startIndex + groupIndex;
+                  const displayNumber = String(index + 1).padStart(2, '0');
                   const openable = canOpen(work);
                   const mediaSrc = work.cover ?? work.detailMedia?.[0] ?? '';
                   const hostLabel = isImageHost(work.cover);
-                  return <div key={work.slug} data-display-number={String(index + 1).padStart(2, '0')} data-work-slug={work.slug} data-media-src={mediaSrc} data-image-host={hostLabel ? 'true' : undefined} role={openable ? 'button' : undefined} tabIndex={openable ? 0 : -1} onClick={() => { if (openable) openDetail(work.slug); }} onKeyDown={(e) => { if (openable && (e.key === 'Enter' || e.key === ' ')) { e.preventDefault(); openDetail(work.slug); } }} className={`group h-fit overflow-hidden rounded-[15px] border bg-white/[0.025] transition hover:-translate-y-1 ${openable ? 'cursor-pointer border-white/24' : 'border-white/10'}`}><div className={`relative ${aspectClass(work)} overflow-hidden`} style={mediaAspectStyle(work)}>{workImage(work)}<div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" /><div className="absolute left-5 top-5 rounded-full border border-white/15 bg-black/30 px-3 py-1 text-xs text-white/80 backdrop-blur-md">{work.tag}</div>{isEditMode && hostLabel && <div className="pointer-events-none absolute left-5 top-[58px] z-30 rounded-md border border-amber-300/70 bg-amber-950/80 px-3 py-1.5 text-[12px] font-semibold text-amber-100 shadow-xl backdrop-blur-md"><div>图床链接</div><div className="mt-0.5 text-[11px]">{work.slug}</div></div>}{openable && (
+                  return <div key={work.slug} data-display-number={displayNumber} data-work-slug={work.slug} data-media-src={mediaSrc} data-image-host={hostLabel ? 'true' : undefined} role={openable ? 'button' : undefined} tabIndex={openable ? 0 : -1} onClick={() => { if (openable) openDetail(work.slug); }} onKeyDown={(e) => { if (openable && (e.key === 'Enter' || e.key === ' ')) { e.preventDefault(); openDetail(work.slug); } }} className={`group h-fit overflow-hidden rounded-[15px] border bg-white/[0.025] transition hover:-translate-y-1 ${openable ? 'cursor-pointer border-white/24' : 'border-white/10'}`}><div className={`relative ${aspectClass(work)} overflow-hidden`} style={mediaAspectStyle(work)}>{workImage(work)}<div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" /><div className="absolute left-5 top-5 rounded-full border border-white/15 bg-black/30 px-3 py-1 text-xs text-white/80 backdrop-blur-md">{work.tag}</div>{isEditMode && <div className="pointer-events-none absolute left-5 top-[58px] z-30 max-w-[calc(100%-40px)] rounded-md border border-sky-300/60 bg-slate-950/82 px-3 py-1.5 text-[12px] font-semibold text-sky-100 shadow-xl backdrop-blur-md"><div>{displayNumber} · {work.slug}</div><div className="mt-0.5 text-[11px] font-medium text-white/62">{work.cover ? '有图' : '空白'} · {work.aspect ?? defaultAspectForTag(work)}</div></div>}{isEditMode && hostLabel && <div className="pointer-events-none absolute left-5 top-[116px] z-30 rounded-md border border-amber-300/70 bg-amber-950/80 px-3 py-1.5 text-[12px] font-semibold text-amber-100 shadow-xl backdrop-blur-md"><div>图床链接</div><div className="mt-0.5 text-[11px]">{work.slug}</div></div>}{openable && (
                     <>
                       <div className="pointer-events-none absolute right-5 top-5 z-20 flex items-center gap-2 rounded-full border border-white/18 bg-black/38 px-3.5 py-2 text-xs font-medium text-white/90 shadow-[0_12px_32px_rgba(0,0,0,0.32)] backdrop-blur-xl transition-all duration-300 group-hover:border-white/30 group-hover:bg-white/14 group-hover:text-white">
                         <span className="relative flex h-2 w-2">
@@ -508,7 +612,7 @@ export default function EcommerceDesignerPortfolio() {
                         <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-white text-lg text-black shadow-[0_10px_28px_rgba(255,255,255,0.18)]">↗</span>
                       </div>
                     </>
-                  )}<div className="absolute bottom-0 left-0 right-0 p-5"><div className="flex items-end justify-between gap-4"><div><p className="text-[14px] font-medium text-white">{String(index + 1).padStart(2, '0')}</p></div><div className="rounded-full bg-white/10 px-3 py-1 text-xs text-white/75 backdrop-blur-md">{work.type}</div></div></div></div></div>;
+                  )}<div className="absolute bottom-0 left-0 right-0 p-5"><div className="flex items-end justify-between gap-4"><div><p className="text-[14px] font-medium text-white">{displayNumber}</p></div><div className="rounded-full bg-white/10 px-3 py-1 text-xs text-white/75 backdrop-blur-md">{work.type}</div></div></div></div></div>;
                 })}
               </div>
             ))}
