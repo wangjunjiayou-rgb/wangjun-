@@ -1,8 +1,9 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 
 type ViewMode = 'home' | 'detail';
-type Aspect = '3:4' | '1:1' | '9:16' | '7:3.5' | '9:11' | '9:4.8';
-type WorkItem = { title: string; slug: string; tag: string; type: string; desc: string; image?: string; detailImage?: string };
+type Aspect = '3:4' | '1:1' | '9:16' | '9:19' | '7:3.5' | '9:11' | '9:4.8';
+type WorkItem = { title: string; slug: string; tag: string; type: string; desc: string; cover?: string; aspect?: Aspect; detailMedia?: string[] };
+type ImageHostAuditItem = { label: string; field: string; url: string; slug?: string; hidden?: boolean };
 
 type Exp = { company: string; time: string; role: string; details: string[] };
 
@@ -22,14 +23,15 @@ const featuredRender: Record<string, number> = {};
 const renderBottomOrder: Record<string, number> = { 'render-04': 0, 'render-05': 1, 'render-06': 2 };
 const hiddenWorks = new Set(['live-14', 'live-19', 'live-20', 'live-27', 'main-image-11', 'main-image-18', 'main-image-19']);
 const heroSlides = ['https://img.alicdn.com/imgextra/i4/1879869629/O1CN01YENLYA2L08r8UppLF_!!1879869629.jpg'];
+const contactQrImage = 'https://i.111666.best/image/mCX5aD5cQIWsbADdyQFDwK.jpg';
 
-const makeWorks = (tag: string, type: string, prefix: string, links: string[]): WorkItem[] => links.map((image, i) => ({
+const makeWorks = (tag: string, type: string, prefix: string, links: string[]): WorkItem[] => links.map((cover, i) => ({
   title: `${prefix} ${String(i + 1).padStart(2, '0')}`,
   slug: `${prefix === '主图展示' ? 'main-image' : prefix === '直播视觉' ? 'live' : prefix === '3D渲染' ? 'render' : 'kv'}-${String(i + 1).padStart(2, '0')}`,
   tag,
   type,
   desc: `${tag}视觉展示项目。`,
-  image,
+  cover,
 }));
 
 const kvWorks: WorkItem[] = makeWorks('KV海报', 'Campaign Visual', 'KV视觉', [
@@ -46,17 +48,17 @@ const kvWorks: WorkItem[] = makeWorks('KV海报', 'Campaign Visual', 'KV视觉',
 ]);
 
 const detailWorks: WorkItem[] = [
-  { title: '儿童医学中心项目', slug: 'kv-case-01', tag: 'KV海报', type: 'Trust Visual', desc: '专业背书与科技感视觉项目。', image: 'https://img.alicdn.com/imgextra/i1/1879869629/O1CN01Uagzuo2L08r7yKYaP_!!1879869629.png', detailImage: 'https://i.111666.best/image/LO8SHeHlXC1QPuYjmLN1Fr.jpg' },
-  { title: '营养补剂详情页设计', slug: 'detail-design-01', tag: '详情设计', type: 'Detail Page', desc: '详情页长图展示项目。', image: 'https://img.alicdn.com/imgextra/i3/1879869629/O1CN01JoUfJx2L08r8V6oNS_!!1879869629.png', detailImage: 'https://i.111666.best/image/7ocUTgFpixpTZkGrslOzLE.jpeg' },
-  { title: '母婴营养液详情页设计', slug: 'detail-design-02', tag: '详情设计', type: 'Detail Page', desc: '母婴营养品详情页设计。', image: 'https://cloud.video.taobao.com/vod/Ci7wv6EpVaYddwN7NTuhBGBUp2njvXfqvrIp-c8nN1g.mp4', detailImage: 'https://i.111666.best/image/PCIxpSHm7vopP8p9tq1Zxu.jpeg' },
-  { title: '详情页设计 03', slug: 'detail-design-03', tag: '详情设计', type: 'Detail Page', desc: '详情页新增项目。', image: 'https://img.alicdn.com/imgextra/i3/1879869629/O1CN01QEWeQx2L08r8ZcoHS_!!1879869629.png', detailImage: 'https://i.111666.best/image/Mh2lqbVDMzLCr7qcfjBuUh.jpeg' },
+  { title: '儿童医学中心项目', slug: 'kv-case-01', tag: 'KV海报', type: 'Trust Visual', desc: '专业背书与科技感视觉项目。', cover: 'https://img.alicdn.com/imgextra/i1/1879869629/O1CN01Uagzuo2L08r7yKYaP_!!1879869629.png', detailMedia: ['https://img.alicdn.com/imgextra/i3/1879869629/O1CN01BeqBUG2L08r817sP4_!!1879869629.jpg'] },
+  { title: '营养补剂详情页设计', slug: 'detail-design-01', tag: '详情设计', type: 'Detail Page', desc: '详情页长图展示项目。', cover: 'https://img.alicdn.com/imgextra/i3/1879869629/O1CN01JoUfJx2L08r8V6oNS_!!1879869629.png', detailMedia: ['https://img.alicdn.com/imgextra/i3/1879869629/O1CN01djOqkN2L08r818kd7_!!1879869629.jpg', 'https://img.alicdn.com/imgextra/i1/1879869629/O1CN01GjlyD72L08r8Yf0wt_!!1879869629.jpg'] },
+  { title: '母婴营养液详情页设计', slug: 'detail-design-02', tag: '详情设计', type: 'Detail Page', desc: '母婴营养品详情页设计。', cover: 'https://cloud.video.taobao.com/vod/Ci7wv6EpVaYddwN7NTuhBGBUp2njvXfqvrIp-c8nN1g.mp4', detailMedia: ['https://cloud.video.taobao.com/vod/yCY7UUA2241Evh5M5hN4cUQvfnTC1QOtRoSrZ2HreOc.mp4', 'https://img.alicdn.com/imgextra/i4/1879869629/O1CN01aqsrtE2L08r8RCKn5_!!1879869629.png', 'https://cloud.video.taobao.com/vod/2szG_tkyL4LKTP1CSfiJmUMICu4E5cLtTJfLuylEiPo.mp4', 'https://img.alicdn.com/imgextra/i3/1879869629/O1CN012rE0Aa2L08r8Lj13t_!!1879869629.png', 'https://img.alicdn.com/imgextra/i3/1879869629/O1CN01nFcg3e2L08r3ZHipI_!!1879869629.jpg'] },
+  { title: '详情页设计 03', slug: 'detail-design-03', tag: '详情设计', type: 'Detail Page', desc: '详情页新增项目。', cover: 'https://img.alicdn.com/imgextra/i3/1879869629/O1CN01QEWeQx2L08r8ZcoHS_!!1879869629.png', detailMedia: ['https://img.alicdn.com/imgextra/i2/1879869629/O1CN01Swp9Ee2L08r8mAW21_!!1879869629.png', 'https://img.alicdn.com/imgextra/i1/1879869629/O1CN018CnkV32L08r8jCYqw_!!1879869629.png'] },
 ];
 
 const liveWorks = makeWorks('直播&其他', 'Live Visual', '直播视觉', [
   'https://img.alicdn.com/imgextra/i2/1879869629/O1CN01tsOAKO2L08r8E8yl3_!!1879869629.png', 'https://img.alicdn.com/imgextra/i3/1879869629/O1CN01bVp3ar2L08r86RLCB_!!1879869629.png',
   'https://cloud.video.taobao.com/vod/uOVrHjIaR9mB3nV5_5_J9dYbded2vW7_yiPV19qGOo4.mp4', 'https://img.alicdn.com/imgextra/i2/1879869629/O1CN01yTGHMO2L08r8FqjIN_!!1879869629.png',
   'https://img.alicdn.com/imgextra/i2/1879869629/O1CN01NpYJxK2L08r8RgOT4_!!1879869629.png', 'https://img.alicdn.com/imgextra/i3/1879869629/O1CN01b9xMD42L08r8Hbhjc_!!1879869629.png',
-  'https://img.alicdn.com/imgextra/i3/1879869629/O1CN01Xo4sEe2L08r7qvbCJ_!!1879869629.png', 'https://img.alicdn.com/imgextra/i2/1879869629/O1CN018Q5qeh2L08r8Z3toO_!!1879869629.png',
+  'https://img.alicdn.com/imgextra/i3/1879869629/O1CN01c9d17S2L08r8OHuks_!!1879869629.jpg', 'https://img.alicdn.com/imgextra/i2/1879869629/O1CN018Q5qeh2L08r8Z3toO_!!1879869629.png',
   'https://img.alicdn.com/imgextra/i2/1879869629/O1CN01SH0l9p2L08r8UgQhH_!!1879869629.png', 'https://img.alicdn.com/imgextra/i3/1879869629/O1CN01liMIUV2L08r3V8atk_!!1879869629.png',
   'https://img.alicdn.com/imgextra/i4/1879869629/O1CN019nv71V2L08r8ItnBI_!!1879869629.png', 'https://img.alicdn.com/imgextra/i2/1879869629/O1CN01whrPhm2L08r8Italk_!!1879869629.png',
   'https://img.alicdn.com/imgextra/i2/1879869629/O1CN01cy8HfA2L08r7qwfjE_!!1879869629.png', 'https://i.111666.best/image/6ENnbgj8J3YQfg7LB8waPe.jpg',
@@ -64,12 +66,13 @@ const liveWorks = makeWorks('直播&其他', 'Live Visual', '直播视觉', [
   'https://img.alicdn.com/imgextra/i3/1879869629/O1CN01tz9pfj2L08r8HcRYV_!!1879869629.png', 'https://img.alicdn.com/imgextra/i4/1879869629/O1CN01mee7bi2L08r8RgGEb_!!1879869629.png',
   'https://img.alicdn.com/imgextra/i4/1879869629/O1CN01CNzsS82L08r8FrKmF_!!1879869629.jpg', 'https://i.111666.best/image/2kX8MtVJmLKxurmEV1dM11.png',
   'https://img.alicdn.com/imgextra/i4/1879869629/O1CN01CNzsS82L08r8FrKmF_!!1879869629.jpg', 'https://img.alicdn.com/imgextra/i1/1879869629/O1CN01slUWiA2L08r8MZDnK_!!1879869629.png',
-  'https://i.111666.best/image/uYD0BQEq0tnK2tej1X8vfU.jpg',
+  'https://img.alicdn.com/imgextra/i4/1879869629/O1CN01T1ejhf2L08r8apXVm_!!1879869629.jpg',
   'https://img.alicdn.com/imgextra/i1/1879869629/O1CN016PcRrw2L08r8Ivs9D_!!1879869629.png',
   'https://img.alicdn.com/imgextra/i2/1879869629/O1CN01fR4FLe2L08r8ItnFb_!!1879869629.png',
   'https://img.alicdn.com/imgextra/i3/1879869629/O1CN01OdJkfH2L08r8i8w3f_!!1879869629.jpg',
   'https://img.alicdn.com/imgextra/i4/1879869629/O1CN019nv71V2L08r8ItnBI_!!1879869629.png',
-]).map((w, i) => ({ ...w, type: i >= 7 && i <= 10 ? 'Live Cover' : 'Live Visual' }));
+  'https://img.alicdn.com/imgextra/i3/1879869629/O1CN01J6ChHU2L08r8mb21J_!!1879869629.jpg',
+]).map((w, i) => ({ ...w, type: i >= 7 && i <= 10 ? 'Live Cover' : 'Live Visual', aspect: ['live-07', 'live-23', 'live-28'].includes(w.slug) ? '9:19' as Aspect : undefined }));
 
 const mainWorks = makeWorks('主图展示', 'Main Image', '主图展示', [
   'https://img.alicdn.com/imgextra/i4/1879869629/O1CN01w92mjp2L08r7wpQCq_!!1879869629.jpg', 'https://img.alicdn.com/imgextra/i1/1879869629/O1CN01MHhZdJ2L08r7woU0o_!!1879869629.png',
@@ -90,19 +93,19 @@ const mainExtraImages = [
   'https://img.alicdn.com/imgextra/i4/1879869629/O1CN01WINO5s2L08r8M8Eeo_!!1879869629.png',
 ];
 
-const mainExtraWorks: WorkItem[] = mainExtraImages.map((image, i) => ({
+const mainExtraWorks: WorkItem[] = mainExtraImages.map((cover, i) => ({
   title: `Main Image Extra ${String(i + 1).padStart(2, '0')}`,
   slug: `main-image-extra-${String(i + 1).padStart(2, '0')}`,
   tag: mainWorks[0].tag,
   type: 'Main Image',
   desc: 'Main image placeholder.',
-  image,
+  cover,
 }));
 
 const works: WorkItem[] = [
   ...detailWorks,
   ...kvWorks,
-  { title: 'AIGC产品广告概念图', slug: 'aigc-01', tag: '新质生产力', type: 'AI Creative', desc: 'AI创意视觉项目。', image: 'https://img.alicdn.com/imgextra/i2/1879869629/O1CN01am20I32L08r8iQO4W_!!1879869629.jpg', detailImage: 'https://i.111666.best/image/vvV6Tc36HyGNoBLJDjgM0T.png' },
+  { title: 'AIGC产品广告概念图', slug: 'aigc-01', tag: '新质生产力', type: 'AI Creative', desc: 'AI创意视觉项目。', cover: 'https://img.alicdn.com/imgextra/i2/1879869629/O1CN01am20I32L08r8iQO4W_!!1879869629.jpg', detailMedia: ['https://img.alicdn.com/imgextra/i4/1879869629/O1CN01V4ALXm2L08r86ge37_!!1879869629.png', 'https://cloud.video.taobao.com/vod/CPlfefYnvWMCyl005NQjRAeRZ-sov_MqX0mBschlTJQ.mp4'] },
   { title: 'AI产品场景合成', slug: 'aigc-02', tag: '新质生产力', type: 'Scene Generation', desc: 'AI场景合成视觉项目。' },
   ...liveWorks,
   ...makeWorks('3D渲染', '3D Render', '3D渲染', [
@@ -137,12 +140,94 @@ const experiences: Exp[] = [
 ];
 
 const isPlaceholderWork = (work: WorkItem) => work.slug.startsWith('main-image-extra-');
-const canOpen = (work: WorkItem) => work.tag === '详情设计' || work.slug === 'aigc-02' || Boolean(work.detailImage);
+const canOpen = (work: WorkItem) => work.tag === '详情设计' || work.slug === 'aigc-02' || Boolean(work.detailMedia?.length);
 const isVideo = (url: string) => /\.mp4(?:$|\?)/i.test(url);
 const isImageHost = (url?: string) => Boolean(url && /(i\.111666\.best|duk\.tw)/i.test(url));
 const isEditModeEnabled = () => new URLSearchParams(window.location.search).get('edit') === '1';
+const aspectCandidates: Array<{ key: Aspect; ratio: number }> = [
+  { key: '9:19', ratio: 9 / 19 },
+  { key: '9:16', ratio: 9 / 16 },
+  { key: '3:4', ratio: 3 / 4 },
+  { key: '9:11', ratio: 9 / 11 },
+  { key: '1:1', ratio: 1 },
+  { key: '7:3.5', ratio: 7 / 3.5 },
+  { key: '9:4.8', ratio: 9 / 4.8 },
+];
+const aspectCandidatesForWork = (work: WorkItem): Array<{ key: Aspect; ratio: number }> => {
+  if (work.tag === '主图展示') return [
+    { key: '3:4', ratio: 3 / 4 },
+    { key: '1:1', ratio: 1 },
+  ];
+  if (work.tag === '3D渲染') return [
+    { key: '9:11', ratio: 9 / 11 },
+    { key: '3:4', ratio: 3 / 4 },
+    { key: '9:4.8', ratio: 9 / 4.8 },
+  ];
+  if (work.tag === 'KV海报') return [
+    { key: '9:16', ratio: 9 / 16 },
+    { key: '3:4', ratio: 3 / 4 },
+  ];
+  if (work.tag === '直播&其他') return [
+    { key: '9:16', ratio: 9 / 16 },
+    { key: '1:1', ratio: 1 },
+    { key: '7:3.5', ratio: 7 / 3.5 },
+  ];
+  if (work.tag === '详情设计') return [{ key: '9:16', ratio: 9 / 16 }];
+  if (work.tag === '新质生产力') return [{ key: '1:1', ratio: 1 }];
+  return aspectCandidates;
+};
+const defaultAspectForTag = (work: WorkItem): Aspect => {
+  if (work.tag === '主图展示') return '3:4';
+  if (work.tag === '直播&其他') return '9:16';
+  if (work.tag === '3D渲染') return '9:11';
+  if (work.tag === '详情设计') return '9:16';
+  if (work.tag === 'KV海报') return '3:4';
+  return '1:1';
+};
+const detectAspectForWork = (work: WorkItem, ratio: number) => {
+  const candidates = aspectCandidatesForWork(work);
+  return candidates.reduce((a, b) => Math.abs(ratio - b.ratio) < Math.abs(ratio - a.ratio) ? b : a).key;
+};
+
+const imageHostItems = [
+  ...heroSlides.map((url, index) => ({ label: `首屏轮播 ${String(index + 1).padStart(2, '0')}`, field: 'heroSlides', url })),
+  { label: '联系方式二维码', field: 'contactQrImage', url: contactQrImage },
+  ...works.flatMap((work) => ([
+    { label: `${work.title} / ${work.slug}`, field: 'cover', url: work.cover, slug: work.slug, hidden: hiddenWorks.has(work.slug) },
+    ...(work.detailMedia ?? []).map((url, index) => ({ label: `${work.title} / ${work.slug} / 媒体 ${index + 1}`, field: 'detailMedia', url, slug: work.slug, hidden: hiddenWorks.has(work.slug) })),
+  ])),
+].filter((item): item is ImageHostAuditItem => isImageHost(item.url) && !(item as ImageHostAuditItem).hidden);
+
+function ImageHostAuditPanel({ onItemSelect }: { onItemSelect: (item: ImageHostAuditItem) => void }) {
+  return (
+    <aside className="fixed bottom-6 left-6 z-[90] hidden w-[360px] max-w-[calc(100vw-48px)] overflow-hidden rounded-[18px] border border-amber-300/35 bg-black/82 text-white shadow-[0_22px_70px_rgba(0,0,0,0.55)] backdrop-blur-2xl md:block">
+      <div className="border-b border-white/10 px-4 py-3">
+        <div className="flex items-center justify-between gap-3">
+          <p className="text-sm font-semibold text-amber-100">图床链接标记</p>
+          <span className="rounded-full border border-amber-300/30 bg-amber-400/10 px-2.5 py-1 text-[11px] font-semibold text-amber-100">{imageHostItems.length} 个</span>
+        </div>
+        <p className="mt-1 text-[12px] leading-5 text-white/48">以下链接来自 i.111666.best / duk.tw，需要替换为无需 VPN 的地址。</p>
+      </div>
+      <div className="max-h-[52vh] overflow-auto p-3">
+        <div className="space-y-2">
+          {imageHostItems.map((item, index) => (
+            <button key={`${item.field}-${item.url}-${index}`} type="button" onClick={() => onItemSelect(item)} disabled={item.hidden} className={`block w-full rounded-[12px] border p-3 text-left transition ${item.hidden ? 'cursor-not-allowed border-white/8 bg-white/[0.025] opacity-55' : 'border-white/10 bg-white/[0.045] hover:border-amber-300/45 hover:bg-amber-300/[0.07]'}`}>
+              <div className="flex items-start justify-between gap-2">
+                <p className="text-[12px] font-semibold leading-5 text-white/86">{String(index + 1).padStart(2, '0')} · {item.label}</p>
+                <span className="shrink-0 rounded-full bg-amber-300/12 px-2 py-0.5 text-[10px] text-amber-100">{item.hidden ? '已隐藏' : item.field}</span>
+              </div>
+              <p className="mt-1 break-all text-[11px] leading-5 text-white/42">{item.url}</p>
+            </button>
+          ))}
+        </div>
+      </div>
+    </aside>
+  );
+}
 
 function TopNav({ isScrolled, onNavClick }: { isScrolled: boolean; onNavClick: (filter: string) => void }) {
+  const isEditMode = isEditModeEnabled();
+  const showQrHostLabel = isEditMode && isImageHost(contactQrImage);
   return (
     <header className={`fixed inset-x-0 top-0 z-50 transition ${isScrolled ? 'border-b border-white/10 bg-black/35 backdrop-blur-2xl' : 'bg-transparent'}`}>
       <div className="relative h-[56px] w-full px-6">
@@ -152,29 +237,45 @@ function TopNav({ isScrolled, onNavClick }: { isScrolled: boolean; onNavClick: (
         </nav>
         <div className="absolute right-[50px] top-1/2 flex -translate-y-1/2 items-center gap-4">
           <button aria-label="搜索" type="button" className="text-white/80"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" className="h-[18px] w-[18px]"><circle cx="11" cy="11" r="7" /><path d="M20 20l-3.5-3.5" /></svg></button>
-          <div className="group relative"><button type="button" className="rounded-full bg-white/10 px-5 py-2 text-[15px] font-semibold text-white">联系方式</button><div className="pointer-events-none absolute right-0 top-[calc(100%+14px)] z-50 w-[220px] opacity-0 shadow-2xl transition group-hover:opacity-100"><img src="https://i.111666.best/image/mCX5aD5cQIWsbADdyQFDwK.jpg" alt="联系方式二维码" className="w-full rounded-xl" /></div></div>
+          <div className="group relative"><button type="button" className="rounded-full bg-white/10 px-5 py-2 text-[15px] font-semibold text-white">联系方式</button>{showQrHostLabel && <div className="pointer-events-none absolute right-0 top-[calc(100%+8px)] z-50 rounded-md border border-amber-300/70 bg-amber-950/90 px-3 py-1.5 text-[12px] font-semibold text-amber-100 shadow-xl backdrop-blur-md">图床链接 / contactQrImage</div>}<div className="pointer-events-none absolute right-0 top-[calc(100%+14px)] z-50 w-[220px] opacity-0 shadow-2xl transition group-hover:opacity-100"><img src={contactQrImage} alt="联系方式二维码" className="w-full rounded-xl" /></div></div>
         </div>
       </div>
     </header>
   );
 }
 
-function DetailPage({ detailProject, onBack }: { detailProject?: WorkItem; onBack: () => void }) {
+function DetailPage({ detailProject, onBack, onNavClick, onAuditItemSelect }: { detailProject?: WorkItem; onBack: () => void; onNavClick: (filter: string) => void; onAuditItemSelect: (item: ImageHostAuditItem) => void }) {
   const [width, setWidth] = useState<number | null>(null);
-  useEffect(() => setWidth(null), [detailProject?.detailImage]);
-  const showHostLabel = isEditModeEnabled() && isImageHost(detailProject?.detailImage);
+  const detailMedia = detailProject?.detailMedia ?? [];
+  const detailMediaKey = detailMedia.join('|');
+  useEffect(() => {
+    setWidth(null);
+    window.scrollTo({ top: 0, behavior: 'auto' });
+  }, [detailProject?.slug, detailMediaKey]);
+  const showHostLabel = isEditModeEnabled() && detailMedia.some((media) => isImageHost(media));
   return (
     <div className="min-h-screen bg-neutral-950 text-white">
-      <TopNav isScrolled={true} onNavClick={() => {}} />
+      <TopNav isScrolled={true} onNavClick={onNavClick} />
+      {isEditModeEnabled() && <ImageHostAuditPanel onItemSelect={onAuditItemSelect} />}
       <main className="pt-20">
         <section className="px-6 py-10 md:px-10">
           <div className="mx-auto mb-8 flex max-w-[1200px] items-start justify-between gap-4 border-b border-white/10 pb-5">
             <div><p className="text-sm uppercase tracking-[0.28em] text-white/35">Detail Project</p><h2 className="mt-3 text-3xl font-semibold md:text-5xl">{detailProject?.title ?? '详情设计项目'}</h2>{showHostLabel && <div className="mt-4 inline-flex rounded-md border border-amber-300/70 bg-amber-950/80 px-3 py-1.5 text-[12px] font-semibold text-amber-100 shadow-xl backdrop-blur-md">二级页图床链接 / {detailProject?.slug}</div>}</div>
             <button type="button" onClick={onBack} className="rounded-full border border-white/10 bg-white/[0.04] px-5 py-2.5 text-sm text-white">返回作品集</button>
           </div>
-          <p className="mx-auto mb-8 max-w-[1200px] text-sm leading-7 text-white/60">这里是详情设计二级页展示区域，仅保留一张长图用于完整展示详情页设计稿。</p>
+          <p className="mx-auto mb-8 max-w-[1200px] text-sm leading-7 text-white/60">这里是详情设计二级页展示区域，用于完整展示详情页设计稿。</p>
           <div className="mx-auto w-full overflow-hidden rounded-[28px] border border-white/10 bg-white/[0.03] shadow-2xl" style={{ maxWidth: width ? `${width}px` : '1200px' }}>
-            {detailProject?.detailImage ? <img src={detailProject.detailImage} alt={detailProject.title} className="block h-auto w-full" onLoad={(e) => setWidth(e.currentTarget.naturalWidth)} /> : <div className="flex min-h-[900px] items-center justify-center bg-neutral-900 text-white/45">详情长图占位区域</div>}
+            {detailMedia.length ? detailMedia.map((media, index) => (
+              <div key={media} className="bg-transparent leading-none">
+                {isVideo(media) ? <video src={media} className="block h-auto w-full" autoPlay muted loop playsInline controls preload="metadata" onLoadedMetadata={(e) => {
+                  const videoWidth = e.currentTarget.videoWidth;
+                  setWidth((current) => current ?? videoWidth);
+                }} /> : <img src={media} alt={`${detailProject?.title ?? '详情设计项目'} ${index + 1}`} className="block h-auto w-full" onLoad={(e) => {
+                  const naturalWidth = e.currentTarget.naturalWidth;
+                  setWidth((current) => current ?? naturalWidth);
+                }} onError={(e) => { e.currentTarget.style.display = 'none'; }} />}
+              </div>
+            )) : <div className="flex min-h-[900px] items-center justify-center bg-neutral-900 text-white/45">详情长图占位区域</div>}
           </div>
         </section>
       </main>
@@ -198,35 +299,30 @@ export default function EcommerceDesignerPortfolio() {
 
   const filteredWorks = useMemo(() => {
     const getSortAspect = (work: WorkItem) => {
-      if (work.tag === '主图展示') return aspectMap[work.slug] ?? '3:4';
-      if (work.tag === '直播&其他') return aspectMap[work.slug] ?? '9:16';
-      if (work.tag === '3D渲染') return aspectMap[work.slug] ?? '9:11';
-      if (work.tag === '详情设计') return '9:16';
-      if (work.tag === 'KV海报') return aspectMap[work.slug] ?? '3:4';
-      if (work.tag === '新质生产力') return '1:1';
-      return 'default';
+      return work.aspect ?? aspectMap[work.slug] ?? defaultAspectForTag(work);
     };
 
     const aspectOrder: Record<string, number> = {
       '9:16': 0,
-      '3:4': 1,
-      '1:1': 2,
-      '7:3.5': 3,
-      '9:11': 4,
-      '9:4.8': 5,
+      '9:19': 1,
+      '3:4': 2,
+      '1:1': 3,
+      '7:3.5': 4,
+      '9:11': 5,
+      '9:4.8': 6,
       default: 99,
     };
 
-    const list = works.filter((work) => !hiddenWorks.has(work.slug) && (work.image || work.detailImage || work.tag === '新质生产力' || isPlaceholderWork(work)) && (activeFilter === '全部' || work.tag === activeFilter));
+    const list = works.filter((work) => !hiddenWorks.has(work.slug) && (work.cover || work.detailMedia?.length || work.tag === '新质生产力' || isPlaceholderWork(work)) && (activeFilter === '全部' || work.tag === activeFilter));
 
     return list.map((work, index) => ({ work, index })).sort((a, b) => {
-      const openDelta = Number(canOpen(b.work)) - Number(canOpen(a.work));
-      if (openDelta) return openDelta;
-
       if (activeFilter === '全部') {
         const category = (categoryOrder[a.work.tag] ?? 999) - (categoryOrder[b.work.tag] ?? 999);
         if (category) return category;
       }
+
+      const openDelta = Number(canOpen(b.work)) - Number(canOpen(a.work));
+      if (openDelta) return openDelta;
 
 
       const aAspect = getSortAspect(a.work);
@@ -263,69 +359,80 @@ export default function EcommerceDesignerPortfolio() {
   useEffect(() => { if (view === 'home' && returnToWorks && worksRef.current) { worksRef.current.scrollIntoView({ behavior: 'auto', block: 'start' }); setReturnToWorks(false); } }, [view, returnToWorks]);
 
   const handleFilter = (filter: string) => { setActiveFilter(filter); requestAnimationFrame(() => worksRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' })); };
+  const handleDetailFilter = (filter: string) => {
+    setActiveFilter(filter);
+    setReturnToWorks(true);
+    setView('home');
+  };
+  const openDetail = (slug: string) => {
+    window.scrollTo({ top: 0, behavior: 'auto' });
+    setDetailSlug(slug);
+    setView('detail');
+  };
+  const scrollToWorkCard = (slug: string) => {
+    window.setTimeout(() => {
+      document.querySelector(`[data-work-slug="${slug}"]`)?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }, 120);
+  };
+  const handleAuditItemSelect = (item: ImageHostAuditItem) => {
+    if (item.hidden) return;
+    if (item.field === 'heroSlides' || item.field === 'contactQrImage') {
+      setView('home');
+      window.requestAnimationFrame(() => window.scrollTo({ top: 0, behavior: 'smooth' }));
+      return;
+    }
+    if (!item.slug) return;
+    if (item.field === 'detailMedia') {
+      setDetailSlug(item.slug);
+      setView('detail');
+      return;
+    }
+    const work = works.find((candidate) => candidate.slug === item.slug);
+    if (!work) return;
+    setView('home');
+    setActiveFilter(work.tag);
+    scrollToWorkCard(item.slug);
+  };
   const aspectClass = (work: WorkItem) => {
-    if (work.tag === '主图展示') {
-      if (aspectMap[work.slug] === '1:1') return 'aspect-square';
-      return 'aspect-[3/4]';
-    }
-    if (work.tag === '直播&其他') {
-      if (aspectMap[work.slug] === '7:3.5') return 'aspect-[2/1]';
-      if (aspectMap[work.slug] === '1:1') return 'aspect-square';
-      return 'aspect-[9/16]';
-    }
-    if (work.tag === '详情设计') return 'aspect-[9/16]';
-    if (work.tag === 'KV海报') {
-      if (aspectMap[work.slug] === '9:16') return 'aspect-[9/16]';
-      return 'aspect-[3/4]';
-    }
-    if (work.tag === '新质生产力') return 'aspect-square';
-    if (work.tag === '3D渲染') {
-      if (aspectMap[work.slug] === '9:4.8') return 'aspect-[9/4.8]';
-      if (aspectMap[work.slug] === '3:4') return 'aspect-[3/4]';
-      return 'aspect-[9/11]';
-    }
+    const aspect = work.aspect ?? aspectMap[work.slug] ?? defaultAspectForTag(work);
+    if (aspect === '1:1') return 'aspect-square';
+    if (aspect === '3:4') return 'aspect-[3/4]';
+    if (aspect === '9:16') return 'aspect-[9/16]';
+    if (aspect === '9:19') return 'aspect-[9/19]';
+    if (aspect === '7:3.5') return 'aspect-[2/1]';
+    if (aspect === '9:11') return 'aspect-[9/11]';
+    if (aspect === '9:4.8') return 'aspect-[9/4.8]';
     return 'aspect-[4/5]';
   };
   const workImage = (work: WorkItem) => {
     const fallback = <div className="absolute inset-0 bg-[linear-gradient(135deg,#1f1f1f,rgba(255,70,70,0.35),#0a0a0a)]" />;
-    if (!work.image) return fallback;
-    if (isVideo(work.image)) {
-      return <>{fallback}<video src={work.image} className="absolute inset-0 h-full w-full object-contain object-top opacity-0 transition-opacity duration-500" autoPlay muted loop playsInline preload="metadata" onLoadedMetadata={(e) => {
+    if (!work.cover) return fallback;
+    if (isVideo(work.cover)) {
+      return <>{fallback}<video src={work.cover} className="absolute inset-0 h-full w-full object-contain object-top opacity-0 transition-opacity duration-500" autoPlay muted loop playsInline preload="metadata" onLoadedMetadata={(e) => {
         const video = e.currentTarget;
         if (video.videoWidth && video.videoHeight) {
           const ratio = video.videoWidth / video.videoHeight;
           setVideoAspectMap((prev) => prev[work.slug] === ratio ? prev : { ...prev, [work.slug]: ratio });
+          if (!work.aspect) {
+            const detected = detectAspectForWork(work, ratio);
+            setAspectMap((prev) => prev[work.slug] === detected ? prev : { ...prev, [work.slug]: detected });
+          }
         }
       }} onLoadedData={(e) => { e.currentTarget.style.opacity = '1'; }} /></>;
     }
-    return <>{fallback}<img src={work.image} alt={work.title} className="absolute left-0 top-1/2 h-auto w-full -translate-y-1/2 object-contain opacity-0 transition-opacity duration-500" onLoad={(e) => {
+    return <>{fallback}<img src={work.cover} alt={work.title} className="absolute left-0 top-1/2 h-auto w-full -translate-y-1/2 object-contain opacity-0 transition-opacity duration-500" onLoad={(e) => {
       const img = e.currentTarget; img.style.opacity = '1';
-      if (work.tag === '主图展示' || work.tag === '直播&其他' || work.tag === '3D渲染' || work.tag === 'KV海报') {
+      if (!work.aspect) {
         const ratio = img.naturalWidth / img.naturalHeight;
-        const candidates = work.tag === '主图展示'
-          ? ([{ key: '3:4', ratio: 3 / 4 }, { key: '1:1', ratio: 1 }] as Array<{ key: Aspect; ratio: number }>)
-          : work.tag === '3D渲染'
-            ? ([{ key: '9:11', ratio: 9 / 11 }, { key: '3:4', ratio: 3 / 4 }, { key: '9:4.8', ratio: 9 / 4.8 }] as Array<{ key: Aspect; ratio: number }>)
-            : work.tag === 'KV海报'
-              ? ([{ key: '9:16', ratio: 9 / 16 }, { key: '3:4', ratio: 3 / 4 }] as Array<{ key: Aspect; ratio: number }>)
-              : ([{ key: '9:16', ratio: 9 / 16 }, { key: '1:1', ratio: 1 }, { key: '7:3.5', ratio: 7 / 3.5 }] as Array<{ key: Aspect; ratio: number }>);
-        const detected = candidates.reduce((a, b) => Math.abs(ratio - b.ratio) < Math.abs(ratio - a.ratio) ? b : a).key;
+        const detected = detectAspectForWork(work, ratio);
         setAspectMap((prev) => prev[work.slug] === detected ? prev : { ...prev, [work.slug]: detected });
       }
     }} /></>;
   };
 
   const layoutKey = (work: WorkItem) => {
-    if (work.tag === '主图展示') return `主图展示-${aspectMap[work.slug] ?? '3:4'}`;
-    if (work.tag === '直播&其他') return `直播&其他-${aspectMap[work.slug] ?? '9:16'}`;
-    if (work.tag === '3D渲染') return `3D渲染-${aspectMap[work.slug] ?? '9:11'}`;
-    if (work.tag === '详情设计') return '通用-9:16';
-    if (work.tag === '新质生产力') return '新质生产力-1:1';
-    if (work.tag === 'KV海报') {
-      const kvAspect = aspectMap[work.slug] ?? '3:4';
-      return kvAspect === '9:16' ? '通用-9:16' : `KV海报-${kvAspect}`;
-    }
-    return `${work.tag}-default`;
+    const aspect = work.aspect ?? aspectMap[work.slug] ?? defaultAspectForTag(work);
+    return `${work.tag}-${aspect}`;
   };
 
   const groupedWorks = filteredWorks.reduce<Array<{ key: string; items: WorkItem[]; startIndex: number }>>((groups, work, index) => {
@@ -344,13 +451,14 @@ export default function EcommerceDesignerPortfolio() {
     if (key === '直播&其他-7:3.5') return 'md:grid-cols-1 xl:grid-cols-2';
     return 'md:grid-cols-2 xl:grid-cols-3';
   };
-  const mediaAspectStyle = (work: WorkItem) => videoAspectMap[work.slug] ? { aspectRatio: videoAspectMap[work.slug] } : undefined;
+  const mediaAspectStyle = (work: WorkItem) => !work.aspect && !aspectMap[work.slug] && videoAspectMap[work.slug] ? { aspectRatio: videoAspectMap[work.slug] } : undefined;
 
-  if (view === 'detail') return <DetailPage detailProject={detailProject} onBack={() => { setReturnToWorks(true); setView('home'); }} />;
+  if (view === 'detail') return <DetailPage detailProject={detailProject} onBack={() => { setReturnToWorks(true); setView('home'); }} onNavClick={handleDetailFilter} onAuditItemSelect={handleAuditItemSelect} />;
 
   return (
     <div className="min-h-screen bg-neutral-950 text-white">
       <TopNav isScrolled={isScrolled} onNavClick={handleFilter} />
+      {isEditMode && <ImageHostAuditPanel onItemSelect={handleAuditItemSelect} />}
       <main>
         <section className="relative aspect-video min-h-[720px] overflow-hidden border-b border-white/10 bg-neutral-950">
           <img src={heroSlides[currentSlide]} alt="首屏海报" className="absolute inset-0 h-full w-full object-cover" />
@@ -380,9 +488,9 @@ export default function EcommerceDesignerPortfolio() {
                 {group.items.map((work, groupIndex) => {
                   const index = group.startIndex + groupIndex;
                   const openable = canOpen(work);
-                  const mediaSrc = work.image ?? work.detailImage ?? '';
-                  const hostLabel = isImageHost(work.image);
-                  return <div key={work.slug} data-display-number={String(index + 1).padStart(2, '0')} data-work-slug={work.slug} data-media-src={mediaSrc} data-image-host={hostLabel ? 'true' : undefined} role={openable ? 'button' : undefined} tabIndex={openable ? 0 : -1} onClick={() => { if (openable) { setDetailSlug(work.slug); setView('detail'); } }} onKeyDown={(e) => { if (openable && (e.key === 'Enter' || e.key === ' ')) { e.preventDefault(); setDetailSlug(work.slug); setView('detail'); } }} className={`group h-fit overflow-hidden rounded-[15px] border bg-white/[0.025] transition hover:-translate-y-1 ${openable ? 'cursor-pointer border-white/24' : 'border-white/10'}`}><div className={`relative ${aspectClass(work)} overflow-hidden`} style={mediaAspectStyle(work)}>{workImage(work)}<div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" /><div className="absolute left-5 top-5 rounded-full border border-white/15 bg-black/30 px-3 py-1 text-xs text-white/80 backdrop-blur-md">{work.tag}</div>{isEditMode && <div className={`pointer-events-none absolute left-5 top-[58px] z-30 rounded-md border px-3 py-1.5 text-[12px] font-semibold shadow-xl backdrop-blur-md ${hostLabel ? 'border-amber-300/70 bg-amber-950/80 text-amber-100' : 'border-lime-300/50 bg-black/72 text-lime-200'}`}><div>编号 {String(index + 1).padStart(2, '0')} / {work.slug}</div>{hostLabel && <div className="mt-0.5 text-[11px]">图床链接</div>}</div>}{openable && (
+                  const mediaSrc = work.cover ?? work.detailMedia?.[0] ?? '';
+                  const hostLabel = isImageHost(work.cover);
+                  return <div key={work.slug} data-display-number={String(index + 1).padStart(2, '0')} data-work-slug={work.slug} data-media-src={mediaSrc} data-image-host={hostLabel ? 'true' : undefined} role={openable ? 'button' : undefined} tabIndex={openable ? 0 : -1} onClick={() => { if (openable) openDetail(work.slug); }} onKeyDown={(e) => { if (openable && (e.key === 'Enter' || e.key === ' ')) { e.preventDefault(); openDetail(work.slug); } }} className={`group h-fit overflow-hidden rounded-[15px] border bg-white/[0.025] transition hover:-translate-y-1 ${openable ? 'cursor-pointer border-white/24' : 'border-white/10'}`}><div className={`relative ${aspectClass(work)} overflow-hidden`} style={mediaAspectStyle(work)}>{workImage(work)}<div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" /><div className="absolute left-5 top-5 rounded-full border border-white/15 bg-black/30 px-3 py-1 text-xs text-white/80 backdrop-blur-md">{work.tag}</div>{isEditMode && hostLabel && <div className="pointer-events-none absolute left-5 top-[58px] z-30 rounded-md border border-amber-300/70 bg-amber-950/80 px-3 py-1.5 text-[12px] font-semibold text-amber-100 shadow-xl backdrop-blur-md"><div>图床链接</div><div className="mt-0.5 text-[11px]">{work.slug}</div></div>}{openable && (
                     <>
                       <div className="pointer-events-none absolute right-5 top-5 z-20 flex items-center gap-2 rounded-full border border-white/18 bg-black/38 px-3.5 py-2 text-xs font-medium text-white/90 shadow-[0_12px_32px_rgba(0,0,0,0.32)] backdrop-blur-xl transition-all duration-300 group-hover:border-white/30 group-hover:bg-white/14 group-hover:text-white">
                         <span className="relative flex h-2 w-2">
