@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from 'react';
+﻿import { useEffect, useMemo, useRef, useState } from 'react';
 
 type ViewMode = 'home' | 'detail';
 type Aspect = '3:4' | '1:1' | '9:16' | '9:19' | '7:3.5' | '9:11' | '9:4.8';
@@ -304,15 +304,14 @@ function TopNav({ isScrolled, onNavClick }: { isScrolled: boolean; onNavClick: (
   const isEditMode = isEditModeEnabled();
   const showQrHostLabel = isEditMode && isImageHost(contactQrImage);
   return (
-    <header className={`fixed inset-x-0 top-0 z-50 transition ${isScrolled ? 'border-b border-white/10 bg-black/35 backdrop-blur-2xl' : 'bg-transparent'}`}>
-      <div className="relative h-[56px] w-full px-6">
-        <button type="button" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })} className="absolute left-[50px] top-1/2 -translate-y-1/2 text-[26px] font-semibold text-white">WANG JUN</button>
-        <nav className="absolute left-[315px] top-1/2 hidden -translate-y-1/2 items-center gap-7 lg:flex">
-          {filters.map((item) => <button key={item} type="button" onClick={() => onNavClick(item)} className="text-[16px] font-semibold text-white/85 hover:text-white">{item}</button>)}
+    <header className={`fixed inset-x-0 top-0 z-50 transition ${isScrolled ? 'border-b border-white/8 bg-[rgba(10,10,10,0.8)] shadow-[0_12px_30px_rgba(0,0,0,0.16)] backdrop-blur-2xl' : 'bg-transparent'}`}>
+      <div className="relative h-[72px] w-full px-6 md:px-8">
+        <button type="button" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })} className="absolute left-6 top-1/2 -translate-y-1/2 text-[14px] font-medium uppercase tracking-[0.32em] text-white md:left-8">WANG JUN</button>
+        <nav className="absolute left-1/2 top-1/2 hidden -translate-x-1/2 -translate-y-1/2 items-center gap-6 lg:flex">
+          {filters.map((item) => <button key={item} type="button" onClick={() => onNavClick(item)} className="text-[12px] font-medium uppercase tracking-[0.18em] text-white/62 transition hover:text-white">{item}</button>)}
         </nav>
-        <div className="absolute right-[50px] top-1/2 flex -translate-y-1/2 items-center gap-4">
-          <button aria-label="搜索" type="button" className="text-white/80"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" className="h-[18px] w-[18px]"><circle cx="11" cy="11" r="7" /><path d="M20 20l-3.5-3.5" /></svg></button>
-          <div className="group relative"><button type="button" className="rounded-full bg-white/10 px-5 py-2 text-[15px] font-semibold text-white">联系方式</button>{showQrHostLabel && <div className="pointer-events-none absolute right-0 top-[calc(100%+8px)] z-50 rounded-md border border-amber-300/70 bg-amber-950/90 px-3 py-1.5 text-[12px] font-semibold text-amber-100 shadow-xl backdrop-blur-md">图床链接 / contactQrImage</div>}<div className="pointer-events-none absolute right-0 top-[calc(100%+14px)] z-50 w-[220px] opacity-0 shadow-2xl transition group-hover:opacity-100"><img src={contactQrImage} alt="联系方式二维码" className="w-full rounded-xl" /></div></div>
+        <div className="absolute right-6 top-1/2 flex -translate-y-1/2 items-center gap-4 md:right-8">
+          <div className="group relative"><button type="button" className="rounded-full border border-white/12 bg-white/[0.04] px-5 py-2 text-[14px] font-medium text-white transition hover:bg-white/[0.08]">联系方式</button>{showQrHostLabel && <div className="pointer-events-none absolute right-0 top-[calc(100%+8px)] z-50 rounded-md border border-amber-300/70 bg-amber-950/90 px-3 py-1.5 text-[12px] font-semibold text-amber-100 shadow-xl backdrop-blur-md">图床链接 / contactQrImage</div>}<div className="pointer-events-none absolute right-0 top-[calc(100%+14px)] z-50 w-[220px] translate-y-2 opacity-0 shadow-2xl transition duration-300 group-hover:translate-y-0 group-hover:opacity-100"><img src={contactQrImage} alt="联系方式二维码" className="w-full rounded-[18px] border border-white/10" /></div></div>
         </div>
       </div>
     </header>
@@ -329,17 +328,16 @@ function DetailPage({ detailProject, onBack, onNavClick, onAuditItemSelect }: { 
   }, [detailProject?.slug, detailMediaKey]);
   const showHostLabel = isEditModeEnabled() && detailMedia.some((media) => isImageHost(media));
   return (
-    <div className="min-h-screen bg-neutral-950 text-white">
+    <div className="min-h-screen bg-[#080808] text-white">
       <TopNav isScrolled={true} onNavClick={onNavClick} />
       {isEditModeEnabled() && <ImageHostAuditPanel onItemSelect={onAuditItemSelect} />}
       <main className="pt-20">
-        <section className="px-6 py-10 md:px-10">
-          <div className="mx-auto mb-8 flex max-w-[1200px] items-start justify-between gap-4 border-b border-white/10 pb-5">
-            <div><p className="text-sm uppercase tracking-[0.28em] text-white/35">Detail Project</p><h2 className="mt-3 text-3xl font-semibold md:text-5xl">{detailProject?.title ?? '详情设计项目'}</h2>{showHostLabel && <div className="mt-4 inline-flex rounded-md border border-amber-300/70 bg-amber-950/80 px-3 py-1.5 text-[12px] font-semibold text-amber-100 shadow-xl backdrop-blur-md">二级页图床链接 / {detailProject?.slug}</div>}</div>
-            <button type="button" onClick={onBack} className="rounded-full border border-white/10 bg-white/[0.04] px-5 py-2.5 text-sm text-white">返回作品集</button>
+        <section className="px-6 py-8 md:px-10">
+          <div className="mx-auto mb-6 flex max-w-[1200px] items-start justify-between gap-4 border-b border-white/8 pb-5">
+            <div><p className="text-[10px] uppercase tracking-[0.32em] text-white/34">Detail Project</p><h2 className="mt-2 text-3xl font-semibold text-white md:text-[42px]">{detailProject?.title ?? '详情设计项目'}</h2>{showHostLabel && <div className="mt-3 inline-flex rounded-md border border-amber-300/70 bg-amber-950/80 px-3 py-1.5 text-[12px] font-semibold text-amber-100 shadow-xl backdrop-blur-md">二级页图床链接 / {detailProject?.slug}</div>}</div>
+            <button type="button" onClick={onBack} className="rounded-full border border-white/12 bg-white/[0.04] px-4 py-2 text-[13px] text-white shadow-[0_10px_30px_rgba(0,0,0,0.16)] transition hover:bg-white/[0.08]">返回作品集</button>
           </div>
-          <p className="mx-auto mb-8 max-w-[1200px] text-sm leading-7 text-white/60">这里是详情设计二级页展示区域，用于完整展示详情页设计稿。</p>
-          <div className="mx-auto w-full overflow-hidden rounded-[28px] border border-white/10 bg-white/[0.03] shadow-2xl" style={{ maxWidth: width ? `${width}px` : '1200px' }}>
+          <div className="mx-auto w-full overflow-hidden rounded-[28px] border border-white/10 bg-white/[0.03] shadow-[0_20px_60px_rgba(0,0,0,0.28)]" style={{ maxWidth: width ? `${width}px` : '1200px' }}>
             {detailMedia.length ? detailMedia.map((media, index) => (
               <div key={media} className="bg-transparent leading-none">
                 {isVideo(media) ? <video src={media} className="block h-auto w-full" autoPlay muted loop playsInline controls preload="metadata" onLoadedMetadata={(e) => {
@@ -354,7 +352,7 @@ function DetailPage({ detailProject, onBack, onNavClick, onAuditItemSelect }: { 
           </div>
         </section>
       </main>
-      <button type="button" onClick={onBack} className="fixed bottom-6 right-6 z-[80] rounded-full border border-white/12 bg-white/10 px-5 py-3 text-sm font-medium text-white shadow-2xl backdrop-blur-xl hover:bg-white/15 md:bottom-8 md:right-8">返回作品集 ↩</button>
+      <button type="button" onClick={onBack} className="fixed bottom-6 right-6 z-[80] rounded-full border border-white/12 bg-[rgba(14,14,16,0.78)] px-5 py-3 text-sm font-medium text-white shadow-[0_18px_50px_rgba(0,0,0,0.3)] backdrop-blur-xl transition hover:bg-[rgba(26,26,28,0.9)] md:bottom-8 md:right-8">返回作品集 ↩</button>
     </div>
   );
 }
@@ -558,34 +556,45 @@ export default function EcommerceDesignerPortfolio() {
   if (view === 'detail') return <DetailPage detailProject={detailProject} onBack={() => { setReturnToWorks(true); setView('home'); }} onNavClick={handleDetailFilter} onAuditItemSelect={handleAuditItemSelect} />;
 
   return (
-    <div className="min-h-screen bg-neutral-950 text-white">
+    <div className="min-h-screen bg-[#080808] text-white">
       <TopNav isScrolled={isScrolled} onNavClick={handleFilter} />
       {isEditMode && <ImageHostAuditPanel onItemSelect={handleAuditItemSelect} />}
       {isEditMode && <EditModeGuide />}
       <main>
-        <section className="relative aspect-video min-h-[720px] overflow-hidden border-b border-white/10 bg-neutral-950">
+        <section className="relative aspect-video min-h-[720px] overflow-hidden border-b border-white/8 bg-[#080808]">
           <img src={heroSlides[currentSlide]} alt="首屏海报" className="absolute inset-0 h-full w-full object-cover" />
           {heroSlides.length > 1 && (
             <>
-              <button type="button" aria-label="上一张轮播" onClick={() => setCurrentSlide((p) => (p - 1 + heroSlides.length) % heroSlides.length)} className="absolute left-8 top-1/2 z-10 flex h-12 w-12 -translate-y-1/2 items-center justify-center rounded-full border border-white/20 bg-black/28 text-white/85 backdrop-blur-xl hover:bg-white/16"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" className="h-5 w-5"><path d="M15 18l-6-6 6-6" /></svg></button>
-              <button type="button" aria-label="下一张轮播" onClick={() => setCurrentSlide((p) => (p + 1) % heroSlides.length)} className="absolute right-8 top-1/2 z-10 flex h-12 w-12 -translate-y-1/2 items-center justify-center rounded-full border border-white/20 bg-black/28 text-white/85 backdrop-blur-xl hover:bg-white/16"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" className="h-5 w-5"><path d="M9 18l6-6-6-6" /></svg></button>
-              <div className="absolute bottom-8 left-1/2 z-10 flex -translate-x-1/2 gap-3">{heroSlides.map((slide, i) => <button key={`${slide}-${i}`} type="button" aria-label={`切换到第 ${i + 1} 页`} onClick={() => setCurrentSlide(i)} className={`h-2.5 rounded-full transition ${currentSlide === i ? 'w-10 bg-white' : 'w-2.5 bg-white/45'}`} />)}</div>
+              <button type="button" aria-label="上一张轮播" onClick={() => setCurrentSlide((p) => (p - 1 + heroSlides.length) % heroSlides.length)} className="absolute left-8 top-1/2 z-10 flex h-12 w-12 -translate-y-1/2 items-center justify-center rounded-full border border-white/12 bg-[rgba(10,10,12,0.36)] text-white/85 shadow-[0_12px_30px_rgba(0,0,0,0.2)] backdrop-blur-xl transition hover:bg-white/10"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" className="h-5 w-5"><path d="M15 18l-6-6 6-6" /></svg></button>
+              <button type="button" aria-label="下一张轮播" onClick={() => setCurrentSlide((p) => (p + 1) % heroSlides.length)} className="absolute right-8 top-1/2 z-10 flex h-12 w-12 -translate-y-1/2 items-center justify-center rounded-full border border-white/12 bg-[rgba(10,10,12,0.36)] text-white/85 shadow-[0_12px_30px_rgba(0,0,0,0.2)] backdrop-blur-xl transition hover:bg-white/10"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" className="h-5 w-5"><path d="M9 18l6-6-6-6" /></svg></button>
+              <div className="absolute bottom-8 left-1/2 z-10 flex -translate-x-1/2 gap-3">{heroSlides.map((slide, i) => <button key={`${slide}-${i}`} type="button" aria-label={`切换到第 ${i + 1} 页`} onClick={() => setCurrentSlide(i)} className={`rounded-full transition ${currentSlide === i ? 'h-2.5 w-10 bg-white' : 'h-2.5 w-2.5 bg-white/40'}`} />)}</div>
             </>
           )}
         </section>
 
-        <section className="mx-auto grid max-w-7xl gap-12 px-6 py-24 md:px-10 xl:grid-cols-[360px_minmax(0,1fr)]">
+        <section className="mx-auto grid max-w-7xl gap-12 px-6 py-24 md:px-10 xl:grid-cols-[380px_minmax(0,1fr)]">
           <aside className="space-y-6 xl:sticky xl:top-28 xl:self-start">
-            <div className="overflow-hidden rounded-[34px] border border-white/10 bg-white/[0.03] p-6 shadow-2xl"><div className="aspect-[4/5] overflow-hidden rounded-[26px]"><img src="https://img.alicdn.com/imgextra/i1/1879869629/O1CN01Sy9MW92L08r8EKara_!!1879869629.png" alt="portrait" className="h-full w-full object-cover" /></div><h4 className="mt-6 text-[42px] font-semibold">汪军</h4><div className="mt-5 flex flex-wrap gap-2 text-sm text-white/72"><span className="rounded-full border border-white/10 px-3 py-1">30岁</span><span className="rounded-full border border-white/10 px-3 py-1">江西</span><span className="rounded-full border border-white/10 px-3 py-1">6年设计经验</span></div><div className="mt-4 space-y-1.5 border-t border-white/10 pt-3 text-sm text-white/62"><p>电话：18607967343（微信同号）</p><p>邮箱：1623571697@qq.com</p></div></div>
-            <div className="rounded-[30px] border border-white/10 bg-white/[0.03] p-6"><p className="text-base font-semibold">个人优势</p><p className="mt-4 text-[15px] leading-8 text-white/72">喜欢尝试前沿科技，始终认为 AIGC 是新质生产力，持续将 AI 能力融入设计流程，提升效率与商业转化表现。</p></div>
-            <div className="rounded-[28px] border border-white/10 bg-white/[0.03] p-5"><p className="mb-4 text-base font-semibold">擅长工具</p><div className="flex flex-wrap gap-3">{['ChatGPT', 'Gemini', 'Photoshop', 'Cinema 4D', 'Octane'].map((tool) => <span key={tool} className="rounded-full border border-white/12 bg-white/[0.04] px-4 py-2 text-sm text-white/82">{tool}</span>)}</div></div>
+            <div className="overflow-hidden rounded-[28px] border border-white/10 bg-white/[0.025] p-6 shadow-[0_12px_30px_rgba(0,0,0,0.12)]"><div className="aspect-[4/5] overflow-hidden rounded-[20px]"><img src="https://img.alicdn.com/imgextra/i1/1879869629/O1CN01Sy9MW92L08r8EKara_!!1879869629.png" alt="portrait" className="h-full w-full object-cover" /></div><p className="mt-6 text-[11px] font-medium uppercase tracking-[0.24em] text-white/34">About</p><h4 className="mt-3 text-[40px] font-semibold text-white">汪军</h4><div className="mt-5 flex flex-wrap gap-2 text-sm text-white/70"><span className="rounded-full border border-white/10 bg-white/[0.02] px-3 py-1">30岁</span><span className="rounded-full border border-white/10 bg-white/[0.02] px-3 py-1">江西</span><span className="rounded-full border border-white/10 bg-white/[0.02] px-3 py-1">6年设计经验</span></div><div className="mt-4 space-y-2 border-t border-white/8 pt-4 text-sm text-white/60"><p>电话：18607967343（微信同号）</p><p>邮箱：1623571697@qq.com</p></div></div>
+            <div className="rounded-[24px] border border-white/10 bg-white/[0.025] p-6 shadow-[0_12px_30px_rgba(0,0,0,0.12)]"><p className="text-[11px] font-medium uppercase tracking-[0.24em] text-white/34">Strength</p><p className="mt-4 text-[15px] leading-8 text-white/70">喜欢尝试前沿科技，始终认为 AIGC 是新质生产力，持续将 AI 能力融入设计流程，提升效率与商业转化表现。</p></div>
+            <div className="rounded-[24px] border border-white/10 bg-white/[0.025] p-5 shadow-[0_12px_30px_rgba(0,0,0,0.12)]"><p className="mb-4 text-[11px] font-medium uppercase tracking-[0.24em] text-white/34">Tools</p><div className="flex flex-wrap gap-3">{['ChatGPT', 'Gemini', 'Photoshop', 'Cinema 4D', 'Octane'].map((tool) => <span key={tool} className="rounded-full border border-white/10 bg-white/[0.02] px-4 py-2 text-sm text-white/76">{tool}</span>)}</div></div>
           </aside>
-          <section><h3 className="mb-8 text-[58px] font-semibold leading-none md:text-[64px]">Experience</h3>{experiences.map((item) => <div key={item.company} className="border-b border-white/10 py-8 first:pt-0"><div className="flex flex-col gap-4 md:flex-row md:justify-between"><div><h4 className="text-[28px] font-semibold md:text-[30px]">{item.company}</h4><p className="mt-2 text-base text-white/42">{item.role}</p></div><div className="text-[18px] text-white/48">{item.time}</div></div><div className="mt-6 space-y-1 text-[15px] leading-8 text-white/72 md:text-[16px]">{item.details.map((detail) => <p key={detail} className="grid grid-cols-[12px_minmax(0,1fr)] gap-2"><span>·</span><span>{detail}</span></p>)}</div></div>)}</section>
+          <section><p className="text-[11px] font-medium uppercase tracking-[0.28em] text-white/34">Experience</p><h3 className="mb-8 mt-3 text-[58px] font-semibold leading-none text-white md:text-[64px]">Experience</h3>{experiences.map((item) => <div key={item.company} className="mt-4 border-b border-white/8 py-7 first:mt-0 first:pt-0"><div className="flex flex-col gap-4 md:flex-row md:justify-between"><div><h4 className="text-[28px] font-semibold text-white md:text-[30px]">{item.company}</h4><p className="mt-2 text-base text-white/52">{item.role}</p></div><div className="text-[14px] uppercase tracking-[0.14em] text-white/30">{item.time}</div></div><div className="mt-6 space-y-2 text-[15px] leading-8 text-white/70 md:text-[16px]">{item.details.map((detail) => <p key={detail} className="grid grid-cols-[14px_minmax(0,1fr)] gap-2"><span className="text-white/28">·</span><span>{detail}</span></p>)}</div></div>)}</section>
         </section>
 
         <section ref={worksRef} className="mx-auto max-w-7xl px-6 py-14 md:px-10">
-          <div className="flex flex-col gap-4 md:flex-row md:items-end md:justify-between"><div><p className="text-sm uppercase tracking-[0.28em] text-white/40">Selected Works</p><h2 className="mt-3 text-4xl font-semibold">作品展示</h2><p className="mt-3 max-w-2xl text-sm leading-7 text-white/55">包含新质生产力、KV海报、详情设计、直播&其他、3D渲染、主图展示等多个方向。</p></div><div className="flex shrink-0 flex-nowrap items-center gap-2 whitespace-nowrap text-sm">{filters.map((filter) => <button key={filter} type="button" onClick={() => handleFilter(filter)} className={`rounded-full px-3.5 py-2 transition ${activeFilter === filter ? 'bg-white text-black' : 'border border-white/10 bg-white/[0.03] text-white/78 hover:bg-white/[0.08]'}`}>{filter}</button>)}</div></div>
-          <div className="mt-8 space-y-5">
+          <div className="bg-transparent p-0">
+            <div className="flex flex-col gap-5 md:flex-row md:items-end md:justify-between">
+              <div>
+                <p className="text-[11px] font-medium uppercase tracking-[0.28em] text-white/34">Selected Works</p>
+                <div className="mt-3 flex flex-wrap items-center gap-3"><h2 className="text-4xl font-semibold text-white">作品展示</h2></div>
+              </div>
+              <div className="sticky top-[84px] z-30 bg-[rgba(13,13,14,0.92)] py-1 backdrop-blur-xl">
+                <div className="flex flex-wrap items-center gap-1.5 rounded-[14px] bg-[#111112] p-1 text-sm">
+                {filters.map((filter) => <button key={filter} type="button" onClick={() => handleFilter(filter)} className={`rounded-full border px-3.5 py-1.5 text-[12px] font-medium transition ${activeFilter === filter ? 'border-white bg-white text-black' : 'border-white/8 bg-transparent text-white/60 hover:border-white/14 hover:bg-white/[0.03] hover:text-white'}`}>{filter}</button>)}
+                </div>
+              </div>
+            </div>
+            <div className="mt-5 space-y-5">
             {groupedWorks.map((group) => (
               <div key={`${group.key}-${group.startIndex}`} className={`grid items-start gap-5 ${groupGridClass(group.key)}`}>
                 {group.items.map((work, groupIndex) => {
@@ -594,28 +603,18 @@ export default function EcommerceDesignerPortfolio() {
                   const openable = canOpen(work);
                   const mediaSrc = work.cover ?? work.detailMedia?.[0] ?? '';
                   const hostLabel = isImageHost(work.cover);
-                  return <div key={work.slug} data-display-number={displayNumber} data-work-slug={work.slug} data-media-src={mediaSrc} data-image-host={hostLabel ? 'true' : undefined} role={openable ? 'button' : undefined} tabIndex={openable ? 0 : -1} onClick={() => { if (openable) openDetail(work.slug); }} onKeyDown={(e) => { if (openable && (e.key === 'Enter' || e.key === ' ')) { e.preventDefault(); openDetail(work.slug); } }} className={`group h-fit overflow-hidden rounded-[15px] border bg-white/[0.025] transition hover:-translate-y-1 ${openable ? 'cursor-pointer border-white/24' : 'border-white/10'}`}><div className={`relative ${aspectClass(work)} overflow-hidden`} style={mediaAspectStyle(work)}>{workImage(work)}<div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" /><div className="absolute left-5 top-5 rounded-full border border-white/15 bg-black/30 px-3 py-1 text-xs text-white/80 backdrop-blur-md">{work.tag}</div>{isEditMode && <div className="pointer-events-none absolute left-5 top-[58px] z-30 max-w-[calc(100%-40px)] rounded-md border border-sky-300/60 bg-slate-950/82 px-3 py-1.5 text-[12px] font-semibold text-sky-100 shadow-xl backdrop-blur-md"><div>{displayNumber} · {work.slug}</div><div className="mt-0.5 text-[11px] font-medium text-white/62">{work.cover ? '有图' : '空白'} · {work.aspect ?? defaultAspectForTag(work)}</div></div>}{isEditMode && hostLabel && <div className="pointer-events-none absolute left-5 top-[116px] z-30 rounded-md border border-amber-300/70 bg-amber-950/80 px-3 py-1.5 text-[12px] font-semibold text-amber-100 shadow-xl backdrop-blur-md"><div>图床链接</div><div className="mt-0.5 text-[11px]">{work.slug}</div></div>}{openable && (
+                  return <div key={work.slug} data-display-number={displayNumber} data-work-slug={work.slug} data-media-src={mediaSrc} data-image-host={hostLabel ? 'true' : undefined} role={openable ? 'button' : undefined} tabIndex={openable ? 0 : -1} onClick={() => { if (openable) openDetail(work.slug); }} onKeyDown={(e) => { if (openable && (e.key === 'Enter' || e.key === ' ')) { e.preventDefault(); openDetail(work.slug); } }} className={`group h-fit overflow-hidden rounded-[16px] border bg-[#111112] shadow-[0_8px_20px_rgba(0,0,0,0.08)] transition duration-300 hover:-translate-y-0.5 hover:shadow-[0_14px_32px_rgba(0,0,0,0.14)] ${openable ? 'cursor-pointer border-white/10 hover:border-white/14' : 'border-white/8'}`}><div className={`relative ${aspectClass(work)} overflow-hidden bg-[#141415]`} style={mediaAspectStyle(work)}>{workImage(work)}<div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(6,6,7,0.01)_14%,rgba(6,6,7,0.03)_44%,rgba(6,6,7,0.18)_100%)]" /><div className="absolute left-3.5 top-3.5 rounded-full border border-white/8 bg-[rgba(6,6,7,0.18)] px-2.5 py-1 text-[10px] font-medium text-white/58 backdrop-blur-md">{work.tag}</div>{isEditMode && <div className="pointer-events-none absolute left-4 top-[52px] z-30 max-w-[calc(100%-32px)] rounded-md border border-sky-300/60 bg-slate-950/82 px-3 py-1.5 text-[12px] font-semibold text-sky-100 shadow-xl backdrop-blur-md"><div>{displayNumber} · {work.slug}</div><div className="mt-0.5 text-[11px] font-medium text-white/62">{work.cover ? '有图' : '空白'} · {work.aspect ?? defaultAspectForTag(work)}</div></div>}{isEditMode && hostLabel && <div className="pointer-events-none absolute left-4 top-[108px] z-30 rounded-md border border-amber-300/70 bg-amber-950/80 px-3 py-1.5 text-[12px] font-semibold text-amber-100 shadow-xl backdrop-blur-md"><div>图床链接</div><div className="mt-0.5 text-[11px]">{work.slug}</div></div>}{openable && (
                     <>
-                      <div className="pointer-events-none absolute right-5 top-5 z-20 flex items-center gap-2 rounded-full border border-white/18 bg-black/38 px-3.5 py-2 text-xs font-medium text-white/90 shadow-[0_12px_32px_rgba(0,0,0,0.32)] backdrop-blur-xl transition-all duration-300 group-hover:border-white/30 group-hover:bg-white/14 group-hover:text-white">
-                        <span className="relative flex h-2 w-2">
-                          <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-white/35" />
-                          <span className="relative inline-flex h-2 w-2 rounded-full bg-white shadow-[0_0_14px_rgba(255,255,255,0.9)]" />
-                        </span>
-                        完整案例 ↗
-                      </div>
-                      <div className="pointer-events-none absolute inset-0 z-10 bg-[linear-gradient(180deg,transparent_8%,rgba(0,0,0,0.18)_42%,rgba(0,0,0,0.52)_100%)] opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
-                      <div className="pointer-events-none absolute left-5 right-5 top-1/2 z-20 flex -translate-y-1/2 translate-y-4 items-center justify-between gap-4 rounded-[15px] border border-white/18 bg-black/52 px-5 py-4 opacity-0 shadow-[0_18px_48px_rgba(0,0,0,0.42)] backdrop-blur-2xl ring-1 ring-white/8 transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100">
-                        <div>
-                          <p className="text-[10px] uppercase tracking-[0.26em] text-white/42">Open Case</p>
-                          <p className="mt-1 text-base font-semibold text-white">查看完整项目</p>
-                        </div>
-                        <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-white text-lg text-black shadow-[0_10px_28px_rgba(255,255,255,0.18)]">↗</span>
+                      <div className="pointer-events-none absolute inset-0 z-10 bg-[linear-gradient(180deg,rgba(6,6,7,0.01)_0%,rgba(6,6,7,0.04)_46%,rgba(6,6,7,0.24)_100%)] opacity-0 transition duration-300 group-hover:opacity-100" />
+                      <div className="pointer-events-none absolute bottom-3.5 left-1/2 z-20 -translate-x-1/2 translate-y-1 rounded-full border border-white/10 bg-[rgba(9,9,10,0.38)] px-3 py-1.5 text-[10px] font-medium uppercase tracking-[0.08em] text-white/78 opacity-0 shadow-[0_8px_24px_rgba(0,0,0,0.18)] backdrop-blur-xl transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100">
+                        查看项目
                       </div>
                     </>
-                  )}<div className="absolute bottom-0 left-0 right-0 p-5"><div className="flex items-end justify-between gap-4"><div><p className="text-[14px] font-medium text-white">{displayNumber}</p></div><div className="rounded-full bg-white/10 px-3 py-1 text-xs text-white/75 backdrop-blur-md">{work.type}</div></div></div></div></div>;
+                  )}</div></div>;
                 })}
               </div>
             ))}
+            </div>
           </div>
         </section>
       </main>
