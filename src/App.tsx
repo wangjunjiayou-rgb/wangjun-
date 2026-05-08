@@ -1,4 +1,4 @@
-﻿import { useEffect, useMemo, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 
 type ViewMode = 'home' | 'detail';
 type Aspect = '3:4' | '1:1' | '9:16' | '9:19' | '7:3.5' | '9:11' | '9:4.8';
@@ -44,7 +44,7 @@ const hiddenWorks = new Set(['live-14', 'live-19', 'live-20', 'live-27', 'main-i
 const clearedMainImageSlugs = new Set([
   'main-image-extra-01',
 ]);
-const heroSlides = ['https://img.alicdn.com/imgextra/i3/1879869629/O1CN01cXnTs52L08r9NBtzu_!!1879869629.png'];
+const heroSlides = ['https://cloud.video.taobao.com/vod/AGFXqLxV-A7rECDpWaNQAWX0N6tAVUStq8cY0381tS8.mp4'];
 const contactQrImage = 'https://i.111666.best/image/mCX5aD5cQIWsbADdyQFDwK.jpg';
 
 const makeWorks = (tag: string, type: string, prefix: string, links: string[]): WorkItem[] => links.map((cover, i) => ({
@@ -562,7 +562,20 @@ export default function EcommerceDesignerPortfolio() {
       {isEditMode && <EditModeGuide />}
       <main>
         <section className="relative aspect-video min-h-[720px] overflow-hidden border-b border-white/8 bg-[#080808]">
-          <img src={heroSlides[currentSlide]} alt="首屏海报" className="absolute inset-0 h-full w-full object-cover" />
+          {isVideo(heroSlides[currentSlide]) ? (
+            <video
+              key={heroSlides[currentSlide]}
+              src={heroSlides[currentSlide]}
+              className="absolute inset-0 h-full w-full object-cover"
+              autoPlay
+              muted
+              loop
+              playsInline
+              preload="auto"
+            />
+          ) : (
+            <img src={heroSlides[currentSlide]} alt="首屏海报" className="absolute inset-0 h-full w-full object-cover" />
+          )}
           {heroSlides.length > 1 && (
             <>
               <button type="button" aria-label="上一张轮播" onClick={() => setCurrentSlide((p) => (p - 1 + heroSlides.length) % heroSlides.length)} className="absolute left-8 top-1/2 z-10 flex h-12 w-12 -translate-y-1/2 items-center justify-center rounded-full border border-white/12 bg-[rgba(10,10,12,0.36)] text-white/85 shadow-[0_12px_30px_rgba(0,0,0,0.2)] backdrop-blur-xl transition hover:bg-white/10"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" className="h-5 w-5"><path d="M15 18l-6-6 6-6" /></svg></button>
