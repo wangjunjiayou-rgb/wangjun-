@@ -44,7 +44,7 @@ const hiddenWorks = new Set(['live-14', 'live-19', 'live-20', 'live-27', 'main-i
 const clearedMainImageSlugs = new Set([
   'main-image-extra-01',
 ]);
-const heroSlides = ['https://cloud.video.taobao.com/vod/AGFXqLxV-A7rECDpWaNQAWX0N6tAVUStq8cY0381tS8.mp4'];
+const heroSlides = ['https://cloud.video.taobao.com/vod/SLJpuEGQIXMfZWkVJlzEHhZg0afaSoOT_3Jgb3K1yvo.mp4'];
 const contactQrImage = 'https://i.111666.best/image/mCX5aD5cQIWsbADdyQFDwK.jpg';
 
 const makeWorks = (tag: string, type: string, prefix: string, links: string[]): WorkItem[] => links.map((cover, i) => ({
