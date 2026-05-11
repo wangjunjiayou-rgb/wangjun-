@@ -178,7 +178,7 @@ const works: WorkItem[] = [
   ...detailWorks,
   ...kvWorks,
   { title: 'AIGC产品广告概念图', slug: 'aigc-01', tag: '新质生产力', type: 'AI Creative', desc: 'AI创意视觉项目。', cover: 'https://img.alicdn.com/imgextra/i2/1879869629/O1CN01am20I32L08r8iQO4W_!!1879869629.jpg', detailMedia: ['https://img.alicdn.com/imgextra/i4/1879869629/O1CN01V4ALXm2L08r86ge37_!!1879869629.png', 'https://cloud.video.taobao.com/vod/CPlfefYnvWMCyl005NQjRAeRZ-sov_MqX0mBschlTJQ.mp4'] },
-  { title: 'AI产品场景合成', slug: 'aigc-02', tag: '新质生产力', type: 'Scene Generation', desc: 'AI场景合成视觉项目。' },
+  { title: 'AI产品场景合成', slug: 'aigc-02', tag: '新质生产力', type: 'Scene Generation', desc: 'AI场景合成视觉项目。', cover: 'https://img.alicdn.com/imgextra/i3/1879869629/O1CN01Rr9Keh2L08rCy30ch_!!1879869629.png', detailMedia: ['https://cloud.video.taobao.com/vod/IO8DnbJHU37tJ4Bzwov5vbzv7S0toxHMdu98biFuN1A.mp4', 'https://img.alicdn.com/imgextra/i2/1879869629/O1CN019tUQB62L08r7wKSZ3_!!1879869629.png'] },
   ...liveWorks,
   ...liveExtraWorks,
   ...makeWorks('3D渲染', '3D Render', '3D渲染', [
@@ -208,7 +208,7 @@ const works: WorkItem[] = [
 ];
 
 const experiences: Exp[] = [
-  { company: '上海巴九零网络科技有限公司', time: '2025.08 - 2026.06', role: '电商设计师', details: ['旗舰店品牌感重塑：负责“金斯健贝旗舰店”视觉升级，针对原有视觉逻辑混乱的痛点，通过重新定义视觉风格并建立规范，建立具有高辨识度和信任感的品牌视觉形象。', '深度利用 AI 工具：利用AIGC解决设计问题（例如AI提示词工作台），将AI能力融入工作并建立工作流', '深入与运营团队沟通交流，确保设计内容符合市场需求和用户喜好，提升转化率'] },
+  { company: '上海巴九零网络科技有限公司', time: '2025.08-至今', role: '电商设计师', details: ['旗舰店品牌感重塑：负责“金斯健贝旗舰店”视觉升级，针对原有视觉逻辑混乱的痛点，通过重新定义视觉风格并建立规范，建立具有高辨识度和信任感的品牌视觉形象。', '深度利用 AI 工具：利用AIGC解决设计问题（例如AI提示词工作台），将AI能力融入工作并建立工作流', '深入与运营团队沟通交流，确保设计内容符合市场需求和用户喜好，提升转化率'] },
   { company: '上海晗晟智能科技有限公司', time: '2024.06 - 2025.07', role: '电商设计师', details: ['负责品牌产品站相关设计，包含页面设计、产品渲染、抖音直播图等。负责全店新版主图优化', '负责公司各平台的风格统一，把握产品卖点，搭配不同场景风格进行场景渲染，提升产品的视觉表现力', '与运营团队合作，确保设计内容符合市场需求和用户喜好，提升转化率'] },
   { company: '上海纯米科技股份有限公司', time: '2022.03 - 2024.02', role: '电商设计师', details: ['负责品牌产品站（天猫、京东、官网、有品）相关设计，包含页面设计、产品渲染、产品包装设计等', '负责市场营销活动视觉设计，建立纯米科技品牌规范，根据公司的发展不断完善、优化品牌规范'] },
   { company: '上海恒辉品牌管理有限公司', time: '2018.06 - 2022.01', role: '电商设计师', details: ['主要负责品牌项目的设计工作，包括主页面视觉设计，二级页面，推广图钻展直通车详情页的设计工作'] },
