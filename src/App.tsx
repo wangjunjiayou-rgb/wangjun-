@@ -178,7 +178,7 @@ const works: WorkItem[] = [
   ...detailWorks,
   ...kvWorks,
   { title: 'AIGC产品广告概念图', slug: 'aigc-01', tag: '新质生产力', type: 'AI Creative', desc: 'AI创意视觉项目。', cover: 'https://img.alicdn.com/imgextra/i2/1879869629/O1CN01am20I32L08r8iQO4W_!!1879869629.jpg', detailMedia: ['https://img.alicdn.com/imgextra/i4/1879869629/O1CN01V4ALXm2L08r86ge37_!!1879869629.png', 'https://cloud.video.taobao.com/vod/CPlfefYnvWMCyl005NQjRAeRZ-sov_MqX0mBschlTJQ.mp4'] },
-  { title: 'AI产品场景合成', slug: 'aigc-02', tag: '新质生产力', type: 'Scene Generation', desc: 'AI场景合成视觉项目。', cover: 'https://img.alicdn.com/imgextra/i3/1879869629/O1CN01Rr9Keh2L08rCy30ch_!!1879869629.png', detailMedia: ['https://cloud.video.taobao.com/vod/IO8DnbJHU37tJ4Bzwov5vbzv7S0toxHMdu98biFuN1A.mp4', 'https://img.alicdn.com/imgextra/i2/1879869629/O1CN019tUQB62L08r7wKSZ3_!!1879869629.png'] },
+  { title: 'AI产品场景合成', slug: 'aigc-02', tag: '新质生产力', type: 'Scene Generation', desc: 'AI场景合成视觉项目。', cover: 'https://img.alicdn.com/imgextra/i3/1879869629/O1CN01I7UBKd2L08rCnF419_!!1879869629.png', detailMedia: ['https://cloud.video.taobao.com/vod/IO8DnbJHU37tJ4Bzwov5vbzv7S0toxHMdu98biFuN1A.mp4', 'https://img.alicdn.com/imgextra/i2/1879869629/O1CN019tUQB62L08r7wKSZ3_!!1879869629.png'] },
   ...liveWorks,
   ...liveExtraWorks,
   ...makeWorks('3D渲染', '3D Render', '3D渲染', [
