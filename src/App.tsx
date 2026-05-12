@@ -44,6 +44,7 @@ const hiddenWorks = new Set(['live-14', 'live-19', 'live-20', 'live-27', 'main-i
 const clearedMainImageSlugs = new Set([
   'main-image-extra-01',
 ]);
+const unscaledVideoCoverSlugs = new Set(['detail-design-02']);
 const heroSlides = ['https://cloud.video.taobao.com/vod/SLJpuEGQIXMfZWkVJlzEHhZg0afaSoOT_3Jgb3K1yvo.mp4'];
 const contactQrImage = 'https://i.111666.best/image/mCX5aD5cQIWsbADdyQFDwK.jpg';
 
@@ -73,6 +74,7 @@ const detailWorks: WorkItem[] = [
   { title: '详情页设计 03', slug: 'detail-design-03', tag: '详情设计', type: 'Detail Page', desc: '详情页新增项目。', cover: 'https://img.alicdn.com/imgextra/i3/1879869629/O1CN01QEWeQx2L08r8ZcoHS_!!1879869629.png', detailMedia: ['https://img.alicdn.com/imgextra/i2/1879869629/O1CN01Swp9Ee2L08r8mAW21_!!1879869629.png', 'https://img.alicdn.com/imgextra/i1/1879869629/O1CN018CnkV32L08r8jCYqw_!!1879869629.png'] },
   { title: '营养补剂详情页设计', slug: 'detail-design-01', tag: '详情设计', type: 'Detail Page', desc: '详情页长图展示项目。', cover: 'https://img.alicdn.com/imgextra/i1/1879869629/O1CN01bEqyNW2L08r9ROACe_!!1879869629.jpg', detailMedia: ['https://img.alicdn.com/imgextra/i3/1879869629/O1CN01djOqkN2L08r818kd7_!!1879869629.jpg', 'https://img.alicdn.com/imgextra/i1/1879869629/O1CN01GjlyD72L08r8Yf0wt_!!1879869629.jpg'] },
   { title: '母婴营养液详情页设计', slug: 'detail-design-02', tag: '详情设计', type: 'Detail Page', desc: '母婴营养品详情页设计。', cover: 'https://cloud.video.taobao.com/vod/Ci7wv6EpVaYddwN7NTuhBGBUp2njvXfqvrIp-c8nN1g.mp4', detailMedia: ['https://cloud.video.taobao.com/vod/yCY7UUA2241Evh5M5hN4cUQvfnTC1QOtRoSrZ2HreOc.mp4', 'https://img.alicdn.com/imgextra/i4/1879869629/O1CN01aqsrtE2L08r8RCKn5_!!1879869629.png', 'https://cloud.video.taobao.com/vod/2szG_tkyL4LKTP1CSfiJmUMICu4E5cLtTJfLuylEiPo.mp4', 'https://img.alicdn.com/imgextra/i3/1879869629/O1CN012rE0Aa2L08r8Lj13t_!!1879869629.png', 'https://img.alicdn.com/imgextra/i3/1879869629/O1CN01nFcg3e2L08r3ZHipI_!!1879869629.jpg'] },
+  { title: '详情页设计 04', slug: 'detail-design-04', tag: '详情设计', type: 'Detail Page', desc: '详情页视频展示项目。', cover: 'https://cloud.video.taobao.com/vod/JHN0tgw6MWW1EW3qRYXP3Iw0870YTKTpXp6D6ZjvCj4.mp4', detailMedia: ['https://cloud.video.taobao.com/vod/JHN0tgw6MWW1EW3qRYXP3Iw0870YTKTpXp6D6ZjvCj4.mp4'] },
   { title: '儿童医学中心项目', slug: 'kv-case-01', tag: 'KV海报', type: 'Trust Visual', desc: '专业背书与科技感视觉项目。', cover: 'https://img.alicdn.com/imgextra/i1/1879869629/O1CN01Uagzuo2L08r7yKYaP_!!1879869629.png', detailMedia: ['https://img.alicdn.com/imgextra/i3/1879869629/O1CN01BeqBUG2L08r817sP4_!!1879869629.jpg'] },
 ];
 
@@ -411,7 +413,16 @@ export default function EcommerceDesignerPortfolio() {
     const list = works.filter((work) => !hiddenWorks.has(work.slug) && (work.cover || work.detailMedia?.length || work.tag === '新质生产力' || isPlaceholderWork(work)) && (activeFilter === '全部' || work.tag === activeFilter));
 
     return list.map((work, index) => ({ work, index })).sort((a, b) => {
+      const aAspect = getSortAspect(a.work);
+      const bAspect = getSortAspect(b.work);
+
       if (activeFilter === '全部') {
+        const featuredDelta = Number(b.work.tag === '新质生产力') - Number(a.work.tag === '新质生产力');
+        if (featuredDelta) return featuredDelta;
+
+        const aspectDelta = (aspectOrder[aAspect] ?? 99) - (aspectOrder[bAspect] ?? 99);
+        if (aspectDelta) return aspectDelta;
+
         const category = (categoryOrder[a.work.tag] ?? 999) - (categoryOrder[b.work.tag] ?? 999);
         if (category) return category;
       }
@@ -419,8 +430,6 @@ export default function EcommerceDesignerPortfolio() {
       const openDelta = Number(canOpen(b.work)) - Number(canOpen(a.work));
       if (openDelta) return openDelta;
 
-      const aAspect = getSortAspect(a.work);
-      const bAspect = getSortAspect(b.work);
       const currentAspectOrder = a.work.tag === '直播&其他' && b.work.tag === '直播&其他' ? liveAspectOrder : aspectOrder;
       const aspectDelta = (currentAspectOrder[aAspect] ?? 99) - (currentAspectOrder[bAspect] ?? 99);
       if (aspectDelta) return aspectDelta;
@@ -508,7 +517,10 @@ export default function EcommerceDesignerPortfolio() {
     const fallback = <div className="absolute inset-0 bg-[linear-gradient(135deg,#1f1f1f,rgba(255,70,70,0.35),#0a0a0a)]" />;
     if (!work.cover) return fallback;
     if (isVideo(work.cover)) {
-      return <>{fallback}<video src={work.cover} className="absolute inset-0 h-full w-full object-contain object-top opacity-0 transition-opacity duration-500" autoPlay muted loop playsInline preload="metadata" onLoadedMetadata={(e) => {
+      const videoClassName = unscaledVideoCoverSlugs.has(work.slug)
+        ? 'absolute inset-0 h-full w-full object-contain object-top opacity-0 transition-opacity duration-500'
+        : 'absolute inset-0 h-full w-full scale-[1.04] object-cover object-center opacity-0 transition-opacity duration-500';
+      return <>{fallback}<video src={work.cover} className={videoClassName} autoPlay muted loop playsInline preload="metadata" onLoadedMetadata={(e) => {
         const video = e.currentTarget;
         if (video.videoWidth && video.videoHeight) {
           const ratio = video.videoWidth / video.videoHeight;
@@ -532,7 +544,7 @@ export default function EcommerceDesignerPortfolio() {
 
   const layoutKey = (work: WorkItem) => {
     const aspect = work.aspect ?? aspectMap[work.slug] ?? defaultAspectForTag(work);
-    return `${work.tag}-${aspect}`;
+    return activeFilter === '全部' && work.tag === '新质生产力' ? `featured-${aspect}` : aspect;
   };
 
   const groupedWorks = filteredWorks.reduce<Array<{ key: string; items: WorkItem[]; startIndex: number }>>((groups, work, index) => {
@@ -547,8 +559,8 @@ export default function EcommerceDesignerPortfolio() {
   }, []);
 
   const groupGridClass = (key: string) => {
-    if (key === '3D渲染-9:4.8') return 'md:grid-cols-1 xl:grid-cols-2';
-    if (key === '直播&其他-7:3.5') return 'md:grid-cols-1 xl:grid-cols-2';
+    if (key === '9:4.8') return 'md:grid-cols-1 xl:grid-cols-2';
+    if (key === '7:3.5') return 'md:grid-cols-1 xl:grid-cols-2';
     return 'md:grid-cols-2 xl:grid-cols-3';
   };
   const mediaAspectStyle = (work: WorkItem) => !work.aspect && !aspectMap[work.slug] && videoAspectMap[work.slug] ? { aspectRatio: videoAspectMap[work.slug] } : undefined;
@@ -619,7 +631,7 @@ export default function EcommerceDesignerPortfolio() {
                   return <div key={work.slug} data-display-number={displayNumber} data-work-slug={work.slug} data-media-src={mediaSrc} data-image-host={hostLabel ? 'true' : undefined} role={openable ? 'button' : undefined} tabIndex={openable ? 0 : -1} onClick={() => { if (openable) openDetail(work.slug); }} onKeyDown={(e) => { if (openable && (e.key === 'Enter' || e.key === ' ')) { e.preventDefault(); openDetail(work.slug); } }} className={`group h-fit overflow-hidden rounded-[16px] border bg-[#111112] shadow-[0_8px_20px_rgba(0,0,0,0.08)] transition duration-300 hover:-translate-y-0.5 hover:shadow-[0_14px_32px_rgba(0,0,0,0.14)] ${openable ? 'cursor-pointer border-white/10 hover:border-white/14' : 'border-white/8'}`}><div className={`relative ${aspectClass(work)} overflow-hidden bg-[#141415]`} style={mediaAspectStyle(work)}>{workImage(work)}<div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(6,6,7,0.01)_14%,rgba(6,6,7,0.03)_44%,rgba(6,6,7,0.18)_100%)]" /><div className="absolute left-3.5 top-3.5 rounded-full border border-white/8 bg-[rgba(6,6,7,0.18)] px-2.5 py-1 text-[10px] font-medium text-white/58 backdrop-blur-md">{work.tag}</div>{isEditMode && <div className="pointer-events-none absolute left-4 top-[52px] z-30 max-w-[calc(100%-32px)] rounded-md border border-sky-300/60 bg-slate-950/82 px-3 py-1.5 text-[12px] font-semibold text-sky-100 shadow-xl backdrop-blur-md"><div>{displayNumber} · {work.slug}</div><div className="mt-0.5 text-[11px] font-medium text-white/62">{work.cover ? '有图' : '空白'} · {work.aspect ?? defaultAspectForTag(work)}</div></div>}{isEditMode && hostLabel && <div className="pointer-events-none absolute left-4 top-[108px] z-30 rounded-md border border-amber-300/70 bg-amber-950/80 px-3 py-1.5 text-[12px] font-semibold text-amber-100 shadow-xl backdrop-blur-md"><div>图床链接</div><div className="mt-0.5 text-[11px]">{work.slug}</div></div>}{openable && (
                     <>
                       <div className="pointer-events-none absolute inset-0 z-10 bg-[linear-gradient(180deg,rgba(6,6,7,0.01)_0%,rgba(6,6,7,0.04)_46%,rgba(6,6,7,0.24)_100%)] opacity-0 transition duration-300 group-hover:opacity-100" />
-                      <div className="pointer-events-none absolute bottom-3.5 left-1/2 z-20 -translate-x-1/2 translate-y-1 rounded-full border border-white/10 bg-[rgba(9,9,10,0.38)] px-3 py-1.5 text-[10px] font-medium uppercase tracking-[0.08em] text-white/78 opacity-0 shadow-[0_8px_24px_rgba(0,0,0,0.18)] backdrop-blur-xl transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100">
+                      <div className="pointer-events-none absolute left-1/2 top-1/2 z-20 -translate-x-1/2 -translate-y-[45%] rounded-full border border-white/10 bg-[rgba(9,9,10,0.5)] px-4 py-2 text-[11px] font-medium uppercase tracking-[0.08em] text-white/86 opacity-0 shadow-[0_12px_32px_rgba(0,0,0,0.22)] backdrop-blur-xl transition-all duration-300 group-hover:-translate-y-1/2 group-hover:opacity-100">
                         查看项目
                       </div>
                     </>
